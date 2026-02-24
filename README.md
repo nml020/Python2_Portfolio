@@ -8,7 +8,7 @@ This is the portfolio of the Python 2 codes that I learned through Winter 2025-2
 
 
 
-## Feature Detection
+## Object Detection
 In this analysis, we took images of sunflowers for finding smaller train images in larger test images using using matching methods with heat map visualization and rectangles for specific location detection.
 
 ```python
