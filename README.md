@@ -34,6 +34,7 @@ This is the portfolio of the Python 2 codes that I learned through Winter 2025-2
 
 
 ### Feature Matches
+In this analysis, we took images of Apple Jacks and a variety of cereal and used ORB and SIFT to detect and match, using BF and FLANN matching, within one another with visualizations through line connections.
 
 ```python
 import cv2
@@ -55,9 +56,8 @@ def display(img,cmap = 'gray'):
 apple_jacks = cv2.imread("apple_jacks.jpg", 0)
 display(apple_jacks)
 ```
+<img width="609" height="930" alt="image" src="https://github.com/user-attachments/assets/dd5f541a-3d30-4f4d-8249-94a392a86567" />
 
-
-![png](output_2_0.png)
 
 
 
@@ -65,9 +65,8 @@ display(apple_jacks)
 cereals = cv2.imread('all_cereal.jpg', 0)
 display(cereals)
 ```
+<img width="1168" height="857" alt="image" src="https://github.com/user-attachments/assets/28e6a75d-d889-4ac8-8349-e431ce530640" />
 
-
-![png](output_3_0.png)
 
 
 
@@ -99,8 +98,7 @@ apple_jacks_matches = cv2.drawMatches(apple_jacks, kp1, cereals, kp2, matches[:2
 display(apple_jacks_matches)
 ```
 
-
-![png](output_8_0.png)
+<img width="1160" height="714" alt="image" src="https://github.com/user-attachments/assets/2404ff72-3e52-41d4-8eec-b7001ed0cce8" />
 
 
 
@@ -148,8 +146,7 @@ sift_matches = cv2.drawMatchesKnn(apple_jacks, kp1, cereals, kp2, good, None, fl
 display(sift_matches)
 ```
 
-
-![png](output_14_0.png)
+<img width="1157" height="708" alt="image" src="https://github.com/user-attachments/assets/e2b929ff-a0ba-47ef-a11c-539350c35a81" />
 
 
 
@@ -189,8 +186,7 @@ flann_matches = cv2.drawMatchesKnn(apple_jacks, kp1, cereals, kp2, good, None, f
 display(flann_matches)
 ```
 
-
-![png](output_18_0.png)
+<img width="1271" height="721" alt="image" src="https://github.com/user-attachments/assets/6263de34-2246-4797-b8c0-96654915177e" />
 
 
 
@@ -241,9 +237,8 @@ flann_matches = cv2.drawMatchesKnn(apple_jacks, kp1, cereals, kp2, matches, None
 
 display(flann_matches)
 ```
+<img width="1152" height="716" alt="image" src="https://github.com/user-attachments/assets/7d4fe00e-5178-424e-99e2-5f41adc29208" />
 
-
-![png](output_24_0.png)
 
 
 ### Object Detection
