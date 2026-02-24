@@ -8,7 +8,7 @@ This is the portfolio of the Python 2 codes that I learned through Winter 2025-2
 
 
 
-
+## Feature Detection
 In this analysis, we took images of sunflowers for finding smaller train images in larger test images using using matching methods with heat map visualization and rectangles for specific location detection.
 
 ```python
@@ -50,10 +50,7 @@ plt.imshow(full)
 
     <matplotlib.image.AxesImage at 0x7ff6c62b0e10>
 
-
-
-
-![png](output_6_1.png)
+<img width="441" height="474" alt="image" src="https://github.com/user-attachments/assets/580f3481-9e16-4bc8-9e16-6f58a169f79f" />
 
 
 
@@ -75,11 +72,8 @@ plt.imshow(test)
 
 
     <matplotlib.image.AxesImage at 0x7ff6c621dc10>
+<img width="466" height="351" alt="image" src="https://github.com/user-attachments/assets/4c6ddeb7-8e71-4159-88a5-9d4211d713c8" />
 
-
-
-
-![png](output_9_1.png)
 
 
 
@@ -132,24 +126,9 @@ for m in methods:
     print('\n')
     print('\n')
 ```
-![png](output_12_1.png)
+<img width="659" height="895" alt="image" src="https://github.com/user-attachments/assets/ac9f6ba4-a502-4045-866d-8476ae7d6c5e" />
 
+<img width="662" height="893" alt="image" src="https://github.com/user-attachments/assets/019cdd06-bbf9-49e8-a24f-5ed5fd717b23" />
 
+<img width="635" height="932" alt="image" src="https://github.com/user-attachments/assets/e0d2e34b-6392-4602-a9ee-d80e3359b8f7" />
 
-![png](output_12_2.png)
-
-
-
-![png](output_12_3.png)
-
-
-
-![png](output_12_4.png)
-
-
-
-![png](output_12_5.png)
-
-
-
-![png](output_12_6.png)
