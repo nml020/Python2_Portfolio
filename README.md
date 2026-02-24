@@ -22,6 +22,259 @@ This is the portfolio of the Python 2 codes that I learned through Winter 2025-2
 
 
 ## Open CV
+### Open CV 1: "OpenCVBasics"
+In this analysis, we used an image, particularly of a sloth, to learn the basics of image processing with modifications including color conservion and image rotation. 
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+```
+
+
+```python
+import cv2
+```
+
+
+```python
+img = cv2.imread("sloth.jpeg")
+```
+
+
+```python
+type(img)
+```
+
+
+
+
+    numpy.ndarray
+
+
+
+
+```python
+img_wrong = cv2.imread('wrong/path/doesnt/abcdegh.jpg')
+```
+
+
+```python
+type(img_wrong)
+```
+
+
+
+
+    NoneType
+
+
+
+
+```python
+plt.imshow(img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7efcdf41fd50>
+
+![Uploading image.png…]()
+
+
+
+
+```python
+fix_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+```
+
+
+```python
+plt.imshow(fix_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7efcdf3d6dd0>
+
+
+![Uploading image.png…]()
+
+
+
+```python
+img_gray = cv2.imread("sloth.jpeg", cv2.IMREAD_GRAYSCALE)
+img_gray.shape
+```
+
+
+
+
+    (190, 266)
+
+
+
+
+```python
+plt.imshow(img_gray)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7efcddb49b10>
+
+
+![Uploading image.png…]()
+
+
+
+
+```python
+plt.imshow(img_gray, cmap = "gray")
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7efcddabc710>
+
+
+![Uploading image.png…]()
+
+
+
+
+```python
+fix_img.shape
+```
+
+
+
+
+    (190, 266, 3)
+
+
+
+
+```python
+new_img = cv2.resize(fix_img,(1000,400))
+plt.imshow(new_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7efcdc224f10>
+
+![Uploading image.png…]()
+
+
+
+
+```python
+new_img.shape
+```
+
+
+
+
+    (400, 1000, 3)
+
+
+
+
+```python
+w_ratio = 0.5
+h_ratio = 0.5
+
+new_img = cv2.resize(fix_img, (0,0), fix_img, w_ratio, h_ratio)
+```
+
+
+```python
+plt.imshow(new_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7efcdc207a10>
+
+
+![Uploading image.png…]()
+
+
+
+
+```python
+new_img.shape
+```
+
+
+
+
+    (95, 133, 3)
+
+
+
+
+```python
+flip_img = cv2.flip(fix_img, 0)
+plt.imshow(flip_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7efcdc174690>
+
+
+![Uploading image.png…]()
+
+
+
+
+```python
+flip_img2 = cv2.flip(fix_img, -1)
+plt.imshow(flip_img2)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7efcdc0e3790>
+
+![Uploading image.png…]()
+
+
+
+
+```python
+type(fix_img)
+```
+
+
+
+
+    numpy.ndarray
+
+
+
+
+```python
+cv2.imwrite('sloth_fixed_image.jpeg', flip_img)
+```
+
+
+
+
+    True
+
+
+
 ## Aspect Detection
 ### Corner Detection
 In this analysis, we used to chessboard images to detect and visualize their corner features using Harris and Shi-Tomasi corner detection methods. 
