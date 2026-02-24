@@ -22,17 +22,183 @@ This is the portfolio of the Python 2 codes that I learned through Winter 2025-2
 
 
 ## Open CV
+## Aspect Detection
+### Corner Detection
+In this analysis, we used to chessboard images to detect and visualize their corner features using Harris and Shi-Tomasi corner detection methods. 
+```python
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+```
 
 
-## Corner Detection
+```python
+flat_chess = cv2.imread('chessboard_green.png')
+flat_chess = cv2.cvtColor(flat_chess, cv2.COLOR_BGR2RGB)
+plt.imshow(flat_chess)
+```
 
 
-## Edge Detection
+
+
+    <matplotlib.image.AxesImage at 0x7f071da3cf90>
+
+<img width="450" height="403" alt="image" src="https://github.com/user-attachments/assets/f64e5d4b-1975-404f-9ef1-d222fca6965c" />
+
+
+
+
+```python
+gray_flat_chess = cv2.cvtColor(flat_chess, cv2.COLOR_BGR2GRAY)
+plt.imshow(gray_flat_chess, cmap = "gray")
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f071d9aaa10>
+
+
+<img width="457" height="411" alt="image" src="https://github.com/user-attachments/assets/e25f604c-e734-435b-bdb1-a1e7eb4cc2a2" />
+
+
+
+
+```python
+real_chess = cv2.imread("chessboard.jpg")
+real_chess = cv2.cvtColor(real_chess, cv2.COLOR_BGR2RGB)
+```
+
+
+```python
+plt.imshow(real_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f071c101c90>
+
+<img width="643" height="413" alt="image" src="https://github.com/user-attachments/assets/6e1efa85-5e6d-4ac0-9d0d-4d25a91c80d3" />
+
+
+
+
+```python
+gray_real_chess = cv2. cvtColor(real_chess, cv2.COLOR_BGR2GRAY)
+plt.imshow(gray_real_chess, cmap = 'gray')
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f071c0950d0>
+
+
+<img width="662" height="427" alt="image" src="https://github.com/user-attachments/assets/72681734-abe9-4e3c-8110-fa6cbf4e38ab" />
+
+
+
+
+```python
+gray = np.float32(gray_flat_chess)
+dst = cv2.cornerHarris(src = gray, blockSize = 2, ksize = 3, k = 0.04)
+
+dst = cv2.dilate(dst, None)
+```
+
+
+```python
+flat_chess[dst>0.01*dst.max()] = [255,0,0]
+
+plt.imshow(flat_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f071c0df9d0>
+
+<img width="466" height="421" alt="image" src="https://github.com/user-attachments/assets/8babc0e1-6b37-40c9-9165-d10a25d06e19" />
+
+
+
+
+```python
+gray = np.float32(gray_real_chess)
+dst = cv2.cornerHarris(src = gray, blockSize = 2, ksize = 3, k = 0.04)
+dst = cv2.dilate(dst, None)
+
+real_chess[dst>0.01*dst.max()] = [255, 0, 0]
+
+plt.imshow(real_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f0715f3d650>
+
+
+<img width="642" height="407" alt="image" src="https://github.com/user-attachments/assets/1cdb3322-131c-4b88-9237-cad8a9621a06" />
+
+
+
+
+```python
+#Shi-Tomasi Corner Detection
+
+corners = cv2.goodFeaturesToTrack(gray_flat_chess, 64, 0.01, 10)
+```
+
+
+```python
+corners = np.int0(corners)
+
+for i in corners:
+    x,y = i.ravel()
+    cv2.circle(flat_chess, (x,y,), 3, (255,0,0), -1)
+    
+plt.imshow(flat_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f0715ec0b90>
+
+
+<img width="446" height="405" alt="image" src="https://github.com/user-attachments/assets/2bbc80e4-33ed-4fc6-8e2b-6e3a3c0f616e" />
+
+
+
+```python
+corners = cv2.goodFeaturesToTrack(gray_real_chess, 100, 0.01, 10)
+
+corners = np.int0(corners)
+
+for i in corners:
+    x,y = i.ravel()
+    cv2.circle(real_chess, (x,y), 3, (0,255,0), -1)
+    
+plt.imshow(real_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f0715e97b50>
+
+<img width="712" height="407" alt="image" src="https://github.com/user-attachments/assets/7ae4a27b-be2b-43d7-9ccd-c35ca37a7466" />
+
+
+
+
+### Edge Detection
+
 
 ## Feature Detection
-
-
-
 ### Feature Matches
 In this analysis, we took images of Apple Jacks and a variety of cereal and used ORB and SIFT to detect and match, using BF and FLANN matching, within one another with visualizations through line connections.
 
