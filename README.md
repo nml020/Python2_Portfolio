@@ -1052,16 +1052,19 @@ new_seq
 
 
 ```python
+# Import functions
 from Bio.Seq import reverse_complement, transcribe, back_transcribe, translate
 ```
 
 
 ```python
+# State string of sequence
 my_string = "GCTGTTATGGGTCGTTGGAAGGGTGGTCGTGCTGCTGGTTAG"
 ```
 
 
 ```python
+# Find reverse complement of string
 reverse_complement(my_string)
 ```
 
@@ -1074,6 +1077,7 @@ reverse_complement(my_string)
 
 
 ```python
+# Transcribe string
 transcribe(my_string)
 ```
 
@@ -1086,6 +1090,7 @@ transcribe(my_string)
 
 
 ```python
+# Back transcribe string
 back_transcribe(my_string)
 ```
 
@@ -1098,6 +1103,7 @@ back_transcribe(my_string)
 
 
 ```python
+# Translation of string to proteins
 translate(my_string)
 ```
 
