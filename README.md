@@ -456,6 +456,7 @@ plt.imshow(real_chess)
 In this analysis, we took images of Apple Jacks and a variety of cereal and used ORB and SIFT to detect and match, using BF and FLANN matching, within one another with visualizations through line connections.
 
 ```python
+# Import libaries
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -464,6 +465,7 @@ import matplotlib.pyplot as plt
 
 
 ```python
+# Define functions for image display
 def display(img,cmap = 'gray'):
     fig = plt.figure(figsize =(12, 10))
     ax = fig.add_subplot(111)
@@ -472,6 +474,7 @@ def display(img,cmap = 'gray'):
 
 
 ```python
+# Image display in gray
 apple_jacks = cv2.imread("apple_jacks.jpg", 0)
 display(apple_jacks)
 ```
@@ -481,6 +484,7 @@ display(apple_jacks)
 
 
 ```python
+# Image display in gray
 cereals = cv2.imread('all_cereal.jpg', 0)
 display(cereals)
 ```
@@ -490,6 +494,7 @@ display(cereals)
 
 
 ```python
+# Creation of ORB detection
 orb = cv2.ORB_create()
 
 kp1,des1 = orb.detectAndCompute(apple_jacks, mask=None)
@@ -498,22 +503,26 @@ kp2,des2 = orb.detectAndCompute(cereals, mask=None)
 
 
 ```python
+# Creation of BF matching
 bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck = True)
 matches = bf.match(des1, des2)
 ```
 
 
 ```python
+# Sort matches
 matches = sorted(matches, key = lambda x:x.distance)
 ```
 
 
 ```python
+# Top 25 matches made
 apple_jacks_matches = cv2.drawMatches(apple_jacks, kp1, cereals, kp2, matches[:25], None, flags = 2)
 ```
 
 
 ```python
+# Display image with matches
 display(apple_jacks_matches)
 ```
 
@@ -522,11 +531,13 @@ display(apple_jacks_matches)
 
 
 ```python
+# Create SIFT detection
 sift = cv2.SIFT_create()
 ```
 
 
 ```python
+# Give keypoints and descriptors for matching
 kp1 = sift.detect(apple_jacks, None)
 kp1, des1 = sift.compute(apple_jacks, kp1)
 
@@ -536,12 +547,14 @@ kp2, des2 = sift.compute(cereals, kp2)
 
 
 ```python
+# Apply BF matching
 bf = cv2.BFMatcher()
 macthes = bf.knnMatch(des1, des2, k=2)
 ```
 
 
 ```python
+# Filter good images
 good = []
 
 for match1, match2 in macthes:
@@ -551,6 +564,7 @@ for match1, match2 in macthes:
 
 
 ```python
+# Print statistics from matching
 print('Length of total matches:', len(macthes))
 print('Length of good matches:', len(good))
 ```
@@ -561,6 +575,7 @@ print('Length of good matches:', len(good))
 
 
 ```python
+# Draw matches
 sift_matches = cv2.drawMatchesKnn(apple_jacks, kp1, cereals, kp2, good, None, flags = 2)
 display(sift_matches)
 ```
@@ -570,6 +585,7 @@ display(sift_matches)
 
 
 ```python
+# Create FLANN matching
 sift = cv2.SIFT_create()
 
 kp1 = sift.detect(apple_jacks, None)
@@ -581,6 +597,7 @@ kp2, des2 = sift.compute(cereals, kp2)
 
 
 ```python
+# Indiccate parameters
 flann_index_KDtree = 0
 index_params = dict(algorithm=flann_index_KDtree, trees = 5)
 search_params = dict(checks=50)
@@ -588,6 +605,7 @@ search_params = dict(checks=50)
 
 
 ```python
+# Load and Perform FLANN matching
 flann = cv2.FlannBasedMatcher(index_params, search_params)
 
 matches = flann.knnMatch(des1, des2, k=2)
@@ -601,6 +619,7 @@ for match1, match2, in matches:
 
 
 ```python
+# Draw matches
 flann_matches = cv2.drawMatchesKnn(apple_jacks, kp1, cereals, kp2, good, None, flags = 0)
 display(flann_matches)
 ```
@@ -610,6 +629,7 @@ display(flann_matches)
 
 
 ```python
+# Create SIFT detection again 
 sift = cv2.SIFT_create()
 
 kp1 = sift.detect(apple_jacks, None)
@@ -621,6 +641,7 @@ kp2, des2 = sift.compute(cereals, kp2)
 
 
 ```python
+# Define FLANN parameters
 flann_index_KDtree = 0
 index_params = dict(algorithm = flann_index_KDtree, trees = 5)
 search_param = dict(checks = 50)
@@ -628,6 +649,7 @@ search_param = dict(checks = 50)
 
 
 ```python
+# Create FLANN matching
 flann = cv2.FlannBasedMatcher(index_params, search_params)
 
 matches = flann.knnMatch(des1, des2, k = 2)
@@ -640,6 +662,7 @@ matchesMask = [[0,0] for i in range(len(matches))]
 
 
 ```python
+# Define parameters
 for i, (match1, match2) in enumerate(matches):
     if match1.distance <0.75*match2.distance:
         matchesMask[i] = [1,0]
@@ -652,6 +675,7 @@ draw_params = dict(matchColor = (0,255,0),
 
 
 ```python
+# Display matches
 flann_matches = cv2.drawMatchesKnn(apple_jacks, kp1, cereals, kp2, matches, None, **draw_params)
 
 display(flann_matches)
