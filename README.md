@@ -300,6 +300,264 @@ cv2.imwrite('sloth_fixed_image.jpeg', flip_img)
 
     True
 
+## Open CV Pt. 2
+In this analysis, we continued with color conversions with the sloth image but added a new concept of image mixing and overlay. 
+```python
+# Import libraries
+import cv2
+import matplotlib.pyplot as plt
+%matplotlib inline
+```
+
+
+```python
+# Import image
+img = cv2.imread("sloth.jpeg")
+```
+
+
+```python
+# Display image 
+plt.imshow(img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f371c22f090>
+
+
+<img width="623" height="410" alt="image" src="https://github.com/user-attachments/assets/cc022b08-9cac-4b73-8310-ef6de6c76dbe" />
+
+
+
+
+```python
+# Convert image to correct coloring 
+img1 = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+```
+
+
+```python
+# Display image
+plt.imshow(img1)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f3717ab0bd0>
+
+
+<img width="578" height="413" alt="image" src="https://github.com/user-attachments/assets/6fa3d5d7-31cb-4587-a564-7c146a8d3baa" />
+
+
+
+```python
+# Convert image colors using HSV coloring
+img2 = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+```
+
+
+```python
+# Display image
+plt.imshow(img2)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f3717a30810>
+
+
+<img width="586" height="408" alt="image" src="https://github.com/user-attachments/assets/af995dc5-2cd2-4e6a-8b2e-547d418a8d7b" />
+
+
+
+
+```python
+# Convert image colors using HLS coloring
+img3 = cv2.cvtColor(img, cv2.COLOR_BGR2HLS)
+```
+
+
+```python
+# Display image
+plt.imshow(img3)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f3717a15fd0>
+
+
+<img width="664" height="413" alt="image" src="https://github.com/user-attachments/assets/da36ccdf-dc9e-45b1-aaf9-29aa420df219" />
+
+
+
+
+```python
+# Load other image
+img1 = cv2.imread('do-not-copy.jpeg')
+img2 = cv2.imread("sloth.jpeg")
+```
+
+
+```python
+# Display image
+plt.imshow(img1)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f3717993810>
+
+
+<img width="657" height="413" alt="image" src="https://github.com/user-attachments/assets/fea3460c-805e-40a9-9a4c-92203cb527dd" />
+
+
+
+```python
+# Covert image to correct coloring 
+img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
+img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+```
+
+
+```python
+# Display image
+plt.imshow(img1)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f37178ffc90>
+
+<img width="605" height="401" alt="image" src="https://github.com/user-attachments/assets/a97d9c58-ada3-40a5-8053-66f70aef9005" />
+
+
+
+
+```python
+# Display first image
+plt.imshow(img2)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f3717878090>
+
+
+<img width="590" height="423" alt="image" src="https://github.com/user-attachments/assets/6535a8a8-dc58-4af4-9246-7a0fe158cff2" />
+
+
+
+
+```python
+# Resize images to the same size
+img1 = cv2.resize(img1, (1200,1200))
+img2 = cv2.resize(img2, (1200, 1200))
+```
+
+
+```python
+# Set blending weights of images
+alpha = 0.5
+beta = 0.5
+```
+
+
+```python
+# Blend images together
+blended = cv2.addWeighted(img1, alpha, img2, beta, gamma=0)
+```
+
+
+```python
+# Display blended image
+plt.imshow(blended)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f3716381c90>
+
+
+<img width="540" height="390" alt="image" src="https://github.com/user-attachments/assets/63d0f2b0-c4e5-400f-9913-7e75d4cdb7d8" />
+
+
+
+
+```python
+# Change blending weights
+# Blend image
+# Display blended image
+alpha = 0.2
+beta = 0.8
+
+blended1 = cv2.addWeighted(img1, alpha, img2, beta, 0)
+plt.imshow(blended1)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f371574e5d0>
+
+
+<img width="471" height="400" alt="image" src="https://github.com/user-attachments/assets/6cf4fd48-96ef-4af6-873b-8029fcde3134" />
+
+
+
+
+```python
+# Reload original images
+# Convert images to RGB coloring
+# Resize sloth image
+img1 = cv2.imread('do-not-copy.jpeg')
+img2 = cv2.imread('sloth.jpeg')
+
+img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
+img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+
+img1 = cv2.resize(img1, (100,100))
+```
+
+
+```python
+# Give images different sizes
+# Set image placements
+# Create overaly boundary
+# Paste smaller image onto larger image
+# Display image combination
+large_img = img2
+small_img = img1
+
+x_offset = 0
+y_offset = 0
+
+x_end = x_offset + small_img.shape[0]
+y_end = y_offset + small_img.shape[1]
+
+large_img[y_offset:y_end, x_offset:x_end] = small_img
+
+plt.imshow(large_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f37177f6710>
+
+<img width="556" height="419" alt="image" src="https://github.com/user-attachments/assets/b45a6528-5db5-473c-bfc0-9018f621d1ca" />
+
+
+
 
 
 ## Aspect Detection
