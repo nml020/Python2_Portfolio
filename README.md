@@ -391,7 +391,7 @@ dna_seq.upper()
 
 
 ```python
-# Pint sequence
+# Print sequence
 dna_seq
 ```
 
