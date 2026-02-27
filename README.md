@@ -556,6 +556,235 @@ plt.imshow(large_img)
 
 <img width="556" height="419" alt="image" src="https://github.com/user-attachments/assets/b45a6528-5db5-473c-bfc0-9018f621d1ca" />
 
+### Open CV Pt. 3
+In this analysis, we finished off images revisions with grayscaling and applying various thresholds to images in comparing pixelation intensity. 
+```python
+# Import libraries
+import cv2
+import matplotlib.pyplot as plt
+%matplotlib inline
+```
+
+
+```python
+# Load image
+img = cv2.imread('rainbow.jpg')
+```
+
+
+```python
+# Display image
+plt.imshow(img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f35d63e1150>
+
+
+<img width="271" height="263" alt="image" src="https://github.com/user-attachments/assets/09070584-a163-43e2-9361-da3160f1624c" />
+
+
+
+
+```python
+# Load image in grayscale
+img = cv2.imread('rainbow.jpg', 0)
+```
+
+
+```python
+# Display image
+plt.imshow(img, cmap = 'gray')
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f35d6382810>
+
+
+<img width="286" height="254" alt="image" src="https://github.com/user-attachments/assets/b58aa5da-78ad-4dee-bd90-828471bcd0b6" />
+
+
+
+
+```python
+# Apply binary threshold
+ret1, thresh1 = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+```
+
+
+```python
+# Show threshold value used
+ret1
+```
+
+
+
+
+    127.0
+
+
+
+
+```python
+# Display image
+plt.imshow(thresh1, cmap= "gray")
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f35d42ebd10>
+
+
+<img width="306" height="257" alt="image" src="https://github.com/user-attachments/assets/bc50dbcb-8a70-487e-987f-b9ad43be6e55" />
+
+
+
+
+```python
+# Apply truncation threshold
+# Display image
+img2 = cv2.imread('rainbow.jpg', 0)
+ret1, thresh1 = cv2.threshold(img2, 127, 255, cv2.THRESH_TRUNC)
+plt.imshow(thresh1, cmap = "gray")
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f35d4257650>
+
+<img width="281" height="254" alt="image" src="https://github.com/user-attachments/assets/44c96e32-eb2e-48ec-9fd1-5a0f42638a89" />
+
+
+
+
+```python
+# Apply to-zero threshold
+# Display image
+img3 = cv2.imread('rainbow.jpg', 0)
+ret1, thresh1 = cv2.threshold(img3, 127, 255, cv2.THRESH_TOZERO)
+plt.imshow(thresh1, cmap = "gray")
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f35d42440d0>
+
+
+<img width="262" height="256" alt="image" src="https://github.com/user-attachments/assets/f8a15103-0863-44e6-9bd9-896de92d2d77" />
+
+
+
+
+```python
+# Import new image
+# Load image in grayscale
+# Display image
+img_r = cv2.imread('crossword.jpg', 0)
+plt.imshow(img_r, cmap = "gray")
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f35d419fcd0>
+
+
+<img width="238" height="257" alt="image" src="https://github.com/user-attachments/assets/4bdb3080-a2b7-4b34-8d63-b902829947e5" />
+
+
+
+
+```python
+# Define functions for image display
+# Make image larger
+# Add subplot
+# Load image in grayscale
+def show_pic(img):
+    fig = plt.figure(figsize = (15,15))
+    ax = fig.add_subplot(111)
+    ax.imshow(img, cmap = 'gray')
+```
+
+
+```python
+# Display image
+show_pic(img_r)
+```
+
+<img width="636" height="858" alt="image" src="https://github.com/user-attachments/assets/5b8c235c-b2f9-4623-a2ff-b227413333de" />
+
+
+
+
+```python
+# Apply binary threshold to new image
+# Display image
+ret, th1 = cv2.threshold(img_r, 127, 255, cv2.THRESH_BINARY)
+show_pic(th1)
+```
+<img width="583" height="861" alt="image" src="https://github.com/user-attachments/assets/633e5096-98fb-422b-8bfd-84e03136707c" />
+
+
+
+
+```python
+# Apply higher binary threshold
+# Display image
+ret, th1 = cv2.threshold(img_r, 200, 255, cv2.THRESH_BINARY)
+show_pic(th1)
+```
+
+<img width="646" height="862" alt="image" src="https://github.com/user-attachments/assets/f4c31f00-d3e2-4e45-96cc-973baa81e28c" />
+
+
+
+
+```python
+# Apply adaptive mean threshold
+th2 = cv2.adaptiveThreshold(img_r, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 8)
+```
+
+
+```python
+# Display image
+show_pic(th2)
+```
+<img width="595" height="868" alt="image" src="https://github.com/user-attachments/assets/f49b8790-5c58-4abf-9035-a714f695eebb" />
+
+
+
+
+```python
+# Blend threshold images
+# Display image
+blended = cv2.addWeighted(src1 = th1, alpha =0.6,
+                          src2 = th2, beta =0.4, gamma = 0)
+show_pic(blended)
+```
+<img width="594" height="875" alt="image" src="https://github.com/user-attachments/assets/3b20338a-a52f-4575-84cc-584927ed3044" />
+
+
+
+
+```python
+# Apply adaptive mean threshold again
+# Blend images
+# Display image
+th3 = cv2.adaptiveThreshold(img_r, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 8)
+
+blended = cv2.addWeighted(src1 = th1, alpha = 0.6,
+                         src2 = th3, beta = 0.4, gamma = 0)
+
+show_pic(blended)
+```
+<img width="613" height="868" alt="image" src="https://github.com/user-attachments/assets/aa955b24-62a7-4573-976d-62e161d1a886" />
 
 
 
