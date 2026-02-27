@@ -3,7 +3,7 @@ This is the portfolio of the Python 2 codes that I learned through Winter 2025-2
 
 
 ## Sequence Objects
-In this analysis, 
+In this analysis, we used Biopython for DNA sequence creation, modification, transcription and translation, codon table visualization, etc. 
 
 ```python
 # Import Seq type
@@ -1113,10 +1113,1056 @@ translate(my_string)
     'AVMGRWKGGRAAG*'
 
 
-
-
-
 ## Sequence Annotations
+In this analysis, 
+
+```python
+# Import SeqRecord
+from Bio.SeqRecord import SeqRecord
+```
+
+
+```python
+# Import Seq
+from Bio.Seq import Seq
+```
+
+
+```python
+# Create sequence 
+simple_seq = Seq("GATC")
+```
+
+
+```python
+# Create SeqRecord
+simple_seq_r = SeqRecord(simple_seq)
+```
+
+
+```python
+# Print sequence
+simple_seq_r
+```
+
+
+
+
+    SeqRecord(seq=Seq('GATC'), id='<unknown id>', name='<unknown name>', description='<unknown description>', dbxrefs=[])
+
+
+
+
+```python
+# Set record ID
+simple_seq_r.id = "AC12345"
+```
+
+
+```python
+# Make sequence description
+simple_seq_r.description = "Made up sequence for VDB Computational Biology Class"
+```
+
+
+```python
+# Print description
+print(simple_seq_r.description)
+```
+
+    Made up sequence for VDB Computational Biology Class
+
+
+
+```python
+# Print saved sequence
+simple_seq_r.seq
+```
+
+
+
+
+    Seq('GATC')
+
+
+
+
+```python
+# Display record of sequence information
+simple_seq_r
+```
+
+
+
+
+    SeqRecord(seq=Seq('GATC'), id='AC12345', name='<unknown name>', description='Made up sequence for VDB Computational Biology Class', dbxrefs=[])
+
+
+
+
+```python
+# Add anotation
+simple_seq_r.annotations["evidence"] = "None. This is just an example"
+```
+
+
+```python
+# Print annotation
+print(simple_seq_r.annotations["evidence"])
+```
+
+    None. This is just an example
+
+
+
+```python
+# Display record again
+simple_seq_r
+```
+
+
+
+
+    SeqRecord(seq=Seq('GATC'), id='AC12345', name='<unknown name>', description='Made up sequence for VDB Computational Biology Class', dbxrefs=[])
+
+
+
+
+```python
+# Add quality score
+simple_seq_r.letter_annotations["phred_quality"] = [40, 40, 38, 30]
+```
+
+
+```python
+# Print letter annotations
+print(simple_seq_r.letter_annotations)
+```
+
+    {'phred_quality': [40, 40, 38, 30]}
+
+
+
+```python
+# FASTA source website
+#https://raw.githubusercontent.com/biopython/biopython/master/Tests/GenBank/NC_005816.fna
+```
+
+
+```python
+# Import SeqIO
+from Bio import SeqIO
+```
+
+
+```python
+# Read FASTA file
+record = SeqIO.read("NC_005816.fna.txt", "fasta")
+```
+
+
+```python
+# Print sequence record
+record
+```
+
+
+
+
+    SeqRecord(seq=Seq('TGTAACGAACGGTGCAATAGTGATCCACACCCAACGCCTGAAATCAGATCCAGG...CTG'), id='gi|45478711|ref|NC_005816.1|', name='gi|45478711|ref|NC_005816.1|', description='gi|45478711|ref|NC_005816.1| Yersinia pestis biovar Microtus str. 91001 plasmid pPCP1, complete sequence', dbxrefs=[])
+
+
+
+
+```python
+# Print sequence
+record.seq
+```
+
+
+
+
+    Seq('TGTAACGAACGGTGCAATAGTGATCCACACCCAACGCCTGAAATCAGATCCAGG...CTG')
+
+
+
+
+```python
+# Show record ID
+record.id
+```
+
+
+
+
+    'gi|45478711|ref|NC_005816.1|'
+
+
+
+
+```python
+# Show record description 
+record.description
+```
+
+
+
+
+    'gi|45478711|ref|NC_005816.1| Yersinia pestis biovar Microtus str. 91001 plasmid pPCP1, complete sequence'
+
+
+
+
+```python
+# Show references
+record.dbxrefs
+```
+
+
+
+
+    []
+
+
+
+
+```python
+# Show annotations
+record.annotations
+```
+
+
+
+
+    {}
+
+
+
+
+```python
+# Show features
+record.features
+```
+
+
+
+
+    []
+
+
+
+
+```python
+# Link to GenBank source 
+#https://raw.githubusercontent.com/biopython/biopython/master/Tests/GenBank/NC_005816.gb
+```
+
+
+```python
+# Read Genbank file
+record = SeqIO.read("NC_005816.GB.txt", "genbank")
+```
+
+
+```python
+# Print sequence record
+record
+```
+
+
+
+
+    SeqRecord(seq=Seq('TGTAACGAACGGTGCAATAGTGATCCACACCCAACGCCTGAAATCAGATCCAGG...CTG'), id='NC_005816.1', name='NC_005816', description='Yersinia pestis biovar Microtus str. 91001 plasmid pPCP1, complete sequence', dbxrefs=['Project:58037'])
+
+
+
+
+```python
+# Print sequence
+record.seq
+```
+
+
+
+
+    Seq('TGTAACGAACGGTGCAATAGTGATCCACACCCAACGCCTGAAATCAGATCCAGG...CTG')
+
+
+
+
+```python
+# Show record ID
+record.id
+```
+
+
+
+
+    'NC_005816.1'
+
+
+
+
+```python
+# Show record name
+record.name
+```
+
+
+
+
+    'NC_005816'
+
+
+
+
+```python
+# Show record description
+record.description
+```
+
+
+
+
+    'Yersinia pestis biovar Microtus str. 91001 plasmid pPCP1, complete sequence'
+
+
+
+
+```python
+# Show annotations
+record.letter_annotations
+```
+
+
+
+
+    {}
+
+
+
+
+```python
+# Find annotation length 
+len(record.annotations)
+```
+
+
+
+
+    13
+
+
+
+
+```python
+# Give source of annotations
+record.annotations["source"]
+```
+
+
+
+
+    'Yersinia pestis biovar Microtus str. 91001'
+
+
+
+
+```python
+# Show database cross references
+record.dbxrefs
+```
+
+
+
+
+    ['Project:58037']
+
+
+
+
+```python
+# Show record length
+len(record.features)
+```
+
+
+
+
+    41
+
+
+
+
+```python
+# Import SeqFeature
+from Bio import SeqFeature
+```
+
+
+```python
+# Create start position after base 5
+start_pos = SeqFeature.AfterPosition(5)
+```
+
+
+```python
+# Create end position between bases 9 and 10
+end_pos = SeqFeature.BetweenPosition(10, left=9, right=10)
+```
+
+
+```python
+# Create location with start and end positions
+my_location = SeqFeature.SimpleLocation(start_pos, end_pos)
+```
+
+
+```python
+# Print location
+print(my_location)
+```
+
+    [>5:(9^10)]
+
+
+
+```python
+# Give start position
+my_location.start
+```
+
+
+
+
+    AfterPosition(5)
+
+
+
+
+```python
+# Give end location
+my_location.end
+```
+
+
+
+
+    BetweenPosition(10, left=9, right=10)
+
+
+
+
+```python
+# Convert end position to integer
+int(my_location.end)
+```
+
+
+
+
+    10
+
+
+
+
+```python
+# Convert start location to integer
+int(my_location.start)
+```
+
+
+
+
+    5
+
+
+
+
+```python
+# Create location from 5 to 9 
+exact_location = SeqFeature.SimpleLocation(5,9)
+```
+
+
+```python
+# Print location
+print(exact_location)
+```
+
+    [5:9]
+
+
+
+```python
+exact_location.start
+```
+
+
+
+
+    ExactPosition(5)
+
+
+
+
+```python
+# Import SeqRecord
+from Bio.SeqRecord import SeqRecord
+```
+
+
+```python
+# Print record information
+record = SeqRecord(Seq("MMYQQGCFAGGTVLRLAKDLAENNRGARVLVVCSEITAVTFRGSPSETHLDSMVGQALFGD"
+...         "GAGAVIVGSDPDLSVERPLYELVWTGATLLPDSEGAIGDHLREVGLTFHLLKDVPGLISK"
+...         "NIEKSLKEDFTPLGISDWNSTFWIAHPGGPAILDQVEAKLGLKEEKMRATREVLSEYGNM"
+...         "SSAC"),
+                  id="gi|14150838|gn|AAK54648.1|AF376133_1",
+            description="chalcone synthase [Cucumis sativus]",
+...
+                  )
+```
+
+
+```python
+# Print record in FASTA format 
+print(record.format("fasta"))
+```
+
+    >gi|14150838|gn|AAK54648.1|AF376133_1 chalcone synthase [Cucumis sativus]
+    MMYQQGCFAGGTVLRLAKDLAENNRGARVLVVCSEITAVTFRGSPSETHLDSMVGQALFG
+    DGAGAVIVGSDPDLSVERPLYELVWTGATLLPDSEGAIGDHLREVGLTFHLLKDVPGLIS
+    KNIEKSLKEDFTPLGISDWNSTFWIAHPGGPAILDQVEAKLGLKEEKMRATREVLSEYGN
+    MSSAC
+    
+
+
+
+```python
+# Import SeqIO
+from Bio import SeqIO
+```
+
+
+```python
+# Read FASTA file
+record = SeqIO.read("NC_005816.GB.txt", "genbank")
+```
+
+
+```python
+# Print sequence record
+record
+```
+
+
+
+
+    SeqRecord(seq=Seq('TGTAACGAACGGTGCAATAGTGATCCACACCCAACGCCTGAAATCAGATCCAGG...CTG'), id='NC_005816.1', name='NC_005816', description='Yersinia pestis biovar Microtus str. 91001 plasmid pPCP1, complete sequence', dbxrefs=['Project:58037'])
+
+
+
+
+```python
+# Print record length 
+len(record)
+```
+
+
+
+
+    9609
+
+
+
+
+```python
+# Print number of annotated features
+len(record.features)
+```
+
+
+
+
+    41
+
+
+
+
+```python
+# Print feature 20 
+print(record.features[20])
+```
+
+    type: gene
+    location: [4342:4780](+)
+    qualifiers:
+        Key: db_xref, Value: ['GeneID:2767712']
+        Key: gene, Value: ['pim']
+        Key: locus_tag, Value: ['YP_pPCP05']
+    
+
+
+
+```python
+# Print feature 21
+print(record.features[21])
+```
+
+    type: CDS
+    location: [4342:4780](+)
+    qualifiers:
+        Key: codon_start, Value: ['1']
+        Key: db_xref, Value: ['GI:45478716', 'GeneID:2767712']
+        Key: gene, Value: ['pim']
+        Key: locus_tag, Value: ['YP_pPCP05']
+        Key: note, Value: ['similar to many previously sequenced pesticin immunity protein entries of Yersinia pestis plasmid pPCP, e.g. gi| 16082683|,ref|NP_395230.1| (NC_003132) , gi|1200166|emb|CAA90861.1| (Z54145 ) , gi|1488655| emb|CAA63439.1| (X92856) , gi|2996219|gb|AAC62543.1| (AF053945) , and gi|5763814|emb|CAB531 67.1| (AL109969)']
+        Key: product, Value: ['pesticin immunity protein']
+        Key: protein_id, Value: ['NP_995571.1']
+        Key: transl_table, Value: ['11']
+        Key: translation, Value: ['MGGGMISKLFCLALIFLSSSGLAEKNTYTAKDILQNLELNTFGNSLSHGIYGKQTTFKQTEFTNIKSNTKKHIALINKDNSWMISLKILGIKRDEYTVCFEDFSLIRPPTYVAIHPLLIKKVKSGNFIVVKEIKKSIPGCTVYYH']
+    
+
+
+
+```python
+# Print subsequence from position 4300-4800
+sub_record = record[4300:4800]
+```
+
+
+```python
+# Find length of subsequence
+len(sub_record)
+```
+
+
+
+
+    500
+
+
+
+
+```python
+# Give length of record features
+len(sub_record.features)
+```
+
+
+
+
+    2
+
+
+
+
+```python
+# Print sub-record feature 0
+sub_record.features[0]
+```
+
+
+
+
+    SeqFeature(SimpleLocation(ExactPosition(42), ExactPosition(480), strand=1), type='gene', qualifiers=...)
+
+
+
+
+```python
+# Print sub-record feature 1
+sub_record.features[1]
+```
+
+
+
+
+    SeqFeature(SimpleLocation(ExactPosition(42), ExactPosition(480), strand=1), type='CDS', qualifiers=...)
+
+
+
+
+```python
+# Print all record feature 0
+print(sub_record.features[0])
+```
+
+    type: gene
+    location: [42:480](+)
+    qualifiers:
+        Key: db_xref, Value: ['GeneID:2767712']
+        Key: gene, Value: ['pim']
+        Key: locus_tag, Value: ['YP_pPCP05']
+    
+
+
+
+```python
+# Print all record feature 1
+print(sub_record.features[1])
+```
+
+    type: CDS
+    location: [42:480](+)
+    qualifiers:
+        Key: codon_start, Value: ['1']
+        Key: db_xref, Value: ['GI:45478716', 'GeneID:2767712']
+        Key: gene, Value: ['pim']
+        Key: locus_tag, Value: ['YP_pPCP05']
+        Key: note, Value: ['similar to many previously sequenced pesticin immunity protein entries of Yersinia pestis plasmid pPCP, e.g. gi| 16082683|,ref|NP_395230.1| (NC_003132) , gi|1200166|emb|CAA90861.1| (Z54145 ) , gi|1488655| emb|CAA63439.1| (X92856) , gi|2996219|gb|AAC62543.1| (AF053945) , and gi|5763814|emb|CAB531 67.1| (AL109969)']
+        Key: product, Value: ['pesticin immunity protein']
+        Key: protein_id, Value: ['NP_995571.1']
+        Key: transl_table, Value: ['11']
+        Key: translation, Value: ['MGGGMISKLFCLALIFLSSSGLAEKNTYTAKDILQNLELNTFGNSLSHGIYGKQTTFKQTEFTNIKSNTKKHIALINKDNSWMISLKILGIKRDEYTVCFEDFSLIRPPTYVAIHPLLIKKVKSGNFIVVKEIKKSIPGCTVYYH']
+    
+
+
+
+```python
+# Give record annotations 
+sub_record.annotations
+```
+
+
+
+
+    {'molecule_type': 'DNA'}
+
+
+
+
+```python
+# Show database cross references
+sub_record.dbxrefs
+```
+
+
+
+
+    []
+
+
+
+
+```python
+# Add typology information
+sub_record.annotations["topology"] = "linear"
+```
+
+
+```python
+# Show typology annotations
+sub_record.annotations
+```
+
+
+
+
+    {'molecule_type': 'DNA', 'topology': 'linear'}
+
+
+
+
+```python
+# Give record ID
+sub_record.id
+```
+
+
+
+
+    'NC_005816.1'
+
+
+
+
+```python
+# Give record name
+sub_record.name
+```
+
+
+
+
+    'NC_005816'
+
+
+
+
+```python
+# Print description of record
+sub_record.description
+```
+
+
+
+
+    'Yersinia pestis biovar Microtus str. 91001 plasmid pPCP1, complete sequence'
+
+
+
+
+```python
+# Edit record description
+sub_record.description = 'Yersinia pestis biovar Microtus str. 91001 plasmid pPCP1, partial sequence'
+```
+
+
+```python
+# Print new description
+sub_record.description
+```
+
+
+
+
+    'Yersinia pestis biovar Microtus str. 91001 plasmid pPCP1, partial sequence'
+
+
+
+
+```python
+# Print first 200 characters of genbank
+print(sub_record.format("genbank")[:200] + "...")
+```
+
+    LOCUS       NC_005816                500 bp    DNA     linear   UNK 01-JAN-1980
+    DEFINITION  Yersinia pestis biovar Microtus str. 91001 plasmid pPCP1, partial
+                sequence.
+    ACCESSION   NC_00581...
+
+
+
+```python
+# Print record from Genbank
+record = SeqIO.read("NC_005816.GB.txt", "genbank")
+```
+
+
+```python
+# Print record
+record
+```
+
+
+
+
+    SeqRecord(seq=Seq('TGTAACGAACGGTGCAATAGTGATCCACACCCAACGCCTGAAATCAGATCCAGG...CTG'), id='NC_005816.1', name='NC_005816', description='Yersinia pestis biovar Microtus str. 91001 plasmid pPCP1, complete sequence', dbxrefs=['Project:58037'])
+
+
+
+
+```python
+# Give record length
+len(record)
+```
+
+
+
+
+    9609
+
+
+
+
+```python
+# Give length of annotations
+len(record.features)
+```
+
+
+
+
+    41
+
+
+
+
+```python
+# Show database cross references
+record.dbxrefs
+```
+
+
+
+
+    ['Project:58037']
+
+
+
+
+```python
+# Print annotation names
+record.annotations.keys()
+```
+
+
+
+
+    dict_keys(['molecule_type', 'topology', 'data_file_division', 'date', 'accessions', 'sequence_version', 'gi', 'keywords', 'source', 'organism', 'taxonomy', 'references', 'comment'])
+
+
+
+
+```python
+# Shift record putting first 2000 bases at the end 
+shifted = record[2000:] + record[:2000]
+```
+
+
+```python
+# Print shifted sequence
+shifted
+```
+
+
+
+
+    SeqRecord(seq=Seq('GATACGCAGTCATATTTTTTACACAATTCTCTAATCCCGACAAGGTCGTAGGTC...GGA'), id='NC_005816.1', name='NC_005816', description='Yersinia pestis biovar Microtus str. 91001 plasmid pPCP1, complete sequence', dbxrefs=[])
+
+
+
+
+```python
+# Give length of shifted sequence 
+len(shifted)
+```
+
+
+
+
+    9609
+
+
+
+
+```python
+# Count features in shifted sequence
+len(shifted.features)
+```
+
+
+
+
+    40
+
+
+
+
+```python
+# Print annotation names
+shifted.annotations.keys()
+```
+
+
+
+
+    dict_keys(['molecule_type'])
+
+
+
+
+```python
+# Show database cross references
+shifted.dbxrefs
+```
+
+
+
+
+    []
+
+
+
+
+```python
+# Show database cross references for shifted sequences
+shifted.dbxrefs = record.dbxrefs[:]
+```
+
+
+```python
+# Show database cross references
+shifted.dbxrefs
+```
+
+
+
+
+    ['Project:58037']
+
+
+
+
+```python
+# Copy annotations from original sequence
+shifted.annotations = record.annotations.copy()
+```
+
+
+```python
+# Print updated annotations names
+shifted.annotations.keys()
+```
+
+
+
+
+    dict_keys(['molecule_type', 'topology', 'data_file_division', 'date', 'accessions', 'sequence_version', 'gi', 'keywords', 'source', 'organism', 'taxonomy', 'references', 'comment'])
+
+
+
+
+```python
+# Print original record
+record
+```
+
+
+
+
+    SeqRecord(seq=Seq('TGTAACGAACGGTGCAATAGTGATCCACACCCAACGCCTGAAATCAGATCCAGG...CTG'), id='NC_005816.1', name='NC_005816', description='Yersinia pestis biovar Microtus str. 91001 plasmid pPCP1, complete sequence', dbxrefs=['Project:58037'])
+
+
+
+
+```python
+# Print: ID, length, features, dbxrefs, annotations
+print("%s %i %i %i %i" % (record.id, len(record), len(record.features), len(record.dbxrefs), len(record.annotations)))
+```
+
+    NC_005816.1 9609 41 1 13
+
+
+
+```python
+# Create sequence reverse complement 
+rc = record.reverse_complement(id = "Testing")
+```
+
+
+```python
+# Print reverse complement
+rc
+```
+
+
+
+
+    SeqRecord(seq=Seq('CAGGGGTCGGGGTACGCATTCCCTCATGCGTCAATATTATCTGGCATTGCGATG...ACA'), id='Testing', name='<unknown name>', description='<unknown description>', dbxrefs=[])
+
+
+
+
+```python
+# Print summary of reverse complement record
+print("%s %i %i %i %i" % (rc.id, len(rc), len(rc.features), len(rc.dbxrefs), len(rc.annotations)))
+```
+
+    Testing 9609 41 0 0
+
 
 
 ## Sequence I/O
