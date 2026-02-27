@@ -3,6 +3,1111 @@ This is the portfolio of the Python 2 codes that I learned through Winter 2025-2
 
 
 ## Sequence Objects
+In this analysis, 
+
+```python
+# Import Seq type
+from Bio.Seq import Seq
+```
+
+
+```python
+# Create DNA sequence
+my_seq = Seq("GATCG")
+```
+
+
+```python
+# Sequence Loop
+# Print index and base
+for index, letter in enumerate(my_seq):
+    print("%i %s" % (index, letter))
+```
+
+    0 G
+    1 A
+    2 T
+    3 C
+    4 G
+
+
+
+```python
+# Print sequence length
+print(len(my_seq))
+```
+
+    5
+
+
+
+```python
+# Print first base
+print(my_seq[0])
+```
+
+    G
+
+
+
+```python
+# Print last base
+print(my_seq[4])
+```
+
+    G
+
+
+
+```python
+# Print third base
+print(my_seq[2])
+```
+
+    T
+
+
+
+```python
+# Count occurrence of "AA"
+Seq("AAAA").count("AA")
+```
+
+
+
+
+    2
+
+
+
+
+```python
+# Create longer DNA sequence
+my_seq = Seq("GATCGATGGGCCTATATAGGATCGAAAATCGC")
+```
+
+
+```python
+# Find sequence length
+len(my_seq)
+```
+
+
+
+
+    32
+
+
+
+
+```python
+# Coung G bases
+my_seq.count("G")
+```
+
+
+
+
+    9
+
+
+
+
+```python
+# Count percentage of "GC"
+100 * (my_seq.count("G") + my_seq.count("C")) / len(my_seq)
+```
+
+
+
+
+    46.875
+
+
+
+
+```python
+# Import GC function
+from Bio.SeqUtils import gc_fraction
+```
+
+
+```python
+# Load DNA sequence again
+my_seq = Seq("GATCGATGGGCCTATATAGGATCGAAAATCGC")
+```
+
+
+```python
+# Calculate GC fraction on sequence
+gc_fraction(my_seq)
+```
+
+
+
+
+    0.46875
+
+
+
+
+```python
+# Find segment of sequence
+my_seq[4:12]
+```
+
+
+
+
+    Seq('GATGGGCC')
+
+
+
+
+```python
+# Start with first character and grab every third nucleotide at the end 
+my_seq[0::3]
+```
+
+
+
+
+    Seq('GCTGTAGTAAG')
+
+
+
+
+```python
+# Reverse previous sequence
+my_seq[1::3]
+```
+
+
+
+
+    Seq('AGGCATGCATC')
+
+
+
+
+```python
+# Find the nucleotide at position 2 
+my_seq[2:3]
+```
+
+
+
+
+    Seq('T')
+
+
+
+
+```python
+# Reverse original sequence
+my_seq[::-1]
+```
+
+
+
+
+    Seq('CGCTAAAAGCTAGGATATATCCGGGTAGCTAG')
+
+
+
+
+```python
+# State original sequence
+str(my_seq)
+```
+
+
+
+
+    'GATCGATGGGCCTATATAGGATCGAAAATCGC'
+
+
+
+
+```python
+# Create FASTA string
+fasta_format_string = ">Name\n%s\n" % my_seq
+```
+
+
+```python
+# Print FASTA sequence
+print(fasta_format_string)
+```
+
+    >Name
+    GATCGATGGGCCTATATAGGATCGAAAATCGC
+    
+
+
+
+```python
+# Create two sequences 
+seq1 = Seq("ACGT")
+seq2 = Seq("AACCGG")
+```
+
+
+```python
+# Join sequences together (1 with 2)
+seq1 + seq2
+```
+
+
+
+
+    Seq('ACGTAACCGG')
+
+
+
+
+```python
+# Join two sequences together (2 with 1)
+seq2 + seq1
+```
+
+
+
+
+    Seq('AACCGGACGT')
+
+
+
+
+```python
+# Create list with specific sequences
+contigs = [Seq("ATG"), Seq("ATCCG"), Seq("TTGCA")]
+```
+
+
+```python
+# Create spacer for sequence
+spacer = Seq("N" *10)
+```
+
+
+```python
+# Join sequences with spacer
+spacer.join(contigs)
+```
+
+
+
+
+    Seq('ATGNNNNNNNNNNATCCGNNNNNNNNNNTTGCA')
+
+
+
+
+```python
+# Create sequence object
+dna_seq = Seq("acgtACGT")
+
+
+```
+
+
+```python
+# Sequence stored and ran 
+dna_seq
+```
+
+
+
+
+    Seq('acgtACGT')
+
+
+
+
+```python
+# Convert sequence to uppercase
+dna_seq.upper()
+```
+
+
+
+
+    Seq('ACGTACGT')
+
+
+
+
+```python
+# Convert sequence to lowercase
+dna_seq.lower()
+```
+
+
+
+
+    Seq('acgtacgt')
+
+
+
+
+```python
+# Convert back to uppercase
+dna_seq.upper()
+```
+
+
+
+
+    Seq('ACGTACGT')
+
+
+
+
+```python
+# Try to find segment in sequence
+"gtac" in dna_seq
+```
+
+
+
+
+    False
+
+
+
+
+```python
+# Try to find segment in sequence
+"GTAC" in dna_seq
+```
+
+
+
+
+    False
+
+
+
+
+```python
+# Pint sequence
+dna_seq
+```
+
+
+
+
+    Seq('acgtACGT')
+
+
+
+
+```python
+# Convert sequence to uppercase
+dna_seq = dna_seq.upper()
+```
+
+
+```python
+# Find segment in new uppercase sequence
+"GTAC" in dna_seq
+```
+
+
+
+
+    True
+
+
+
+
+```python
+# Re-print sequence
+my_seq = Seq("GATCGATGGGCCTATATAGGATCGAAAATCGC")
+```
+
+
+```python
+# Find sequence complement
+my_seq.complement()
+```
+
+
+
+
+    Seq('CTAGCTACCCGGATATATCCTAGCTTTTAGCG')
+
+
+
+
+```python
+# Find reverse complement of sequence
+my_seq.reverse_complement()
+```
+
+
+
+
+    Seq('GCGATTTTCGATCCTATATAGGCCCATCGATC')
+
+
+
+
+```python
+# Protein sequence created
+# Print sequence complement
+protein_seq = Seq("EVRNAK")
+protein_seq.complement()
+```
+
+
+
+
+    Seq('EBYNTM')
+
+
+
+
+```python
+# Create coding DNA sequence
+coding_dna = Seq("ATGGCCATTGTAATGGCCGCTCAAAGGGTGCCCGATAG")
+```
+
+
+```python
+# Print coding sequence
+coding_dna
+```
+
+
+
+
+    Seq('ATGGCCATTGTAATGGCCGCTCAAAGGGTGCCCGATAG')
+
+
+
+
+```python
+# Find reverse complement of sequence
+template_dna = coding_dna.reverse_complement()
+```
+
+
+```python
+# Print reverse complememnt 
+template_dna
+```
+
+
+
+
+    Seq('CTATCGGGCACCCTTTGAGCGGCCATTACAATGGCCAT')
+
+
+
+
+```python
+# Print coding sequence again
+coding_dna
+```
+
+
+
+
+    Seq('ATGGCCATTGTAATGGCCGCTCAAAGGGTGCCCGATAG')
+
+
+
+
+```python
+# Transcription of DNA to RNA
+messenger_rna = coding_dna.transcribe()
+```
+
+
+```python
+# Print new RNA sequence
+messenger_rna
+```
+
+
+
+
+    Seq('AUGGCCAUUGUAAUGGCCGCUCAAAGGGUGCCCGAUAG')
+
+
+
+
+```python
+# Find reverse complement od DNA and convert to RNA
+template_dna.reverse_complement().transcribe()
+```
+
+
+
+
+    Seq('AUGGCCAUUGUAAUGGCCGCUCAAAGGGUGCCCGAUAG')
+
+
+
+
+```python
+# Transcribe RNA back to DNA
+messenger_rna.back_transcribe()
+```
+
+
+
+
+    Seq('ATGGCCATTGTAATGGCCGCTCAAAGGGTGCCCGATAG')
+
+
+
+
+```python
+# Transcribe sequence to RNA
+messenger_rna
+```
+
+
+
+
+    Seq('AUGGCCAUUGUAAUGGCCGCUCAAAGGGUGCCCGAUAG')
+
+
+
+
+```python
+# Translate RNA sequence to protein sequence
+messenger_rna.translate()
+```
+
+
+
+
+
+    Seq('MAIVMAAQRVPD')
+
+
+
+
+```python
+# Translate DNA using "Vertebrate Mitchondrial" code
+coding_dna.translate(table="Vertebrate Mitochondrial")
+```
+
+
+
+
+    Seq('MAIVMAAQ*VPD')
+
+
+
+
+```python
+# Translate DNA using Table name
+coding_dna.translate(table = 2)
+```
+
+
+
+
+    Seq('MAIVMAAQ*VPD')
+
+
+
+
+```python
+# Translation ends at stop codon
+coding_dna.translate(to_stop = True)
+```
+
+
+
+
+    Seq('MAIVMAAQRVPD')
+
+
+
+
+```python
+# Apply ending at stop codon to Table 2
+coding_dna.translate(table = 2, to_stop=True)
+```
+
+
+
+
+    Seq('MAIVMAAQ')
+
+
+
+
+```python
+# Stop symbol changed
+coding_dna.translate(table = 2, stop_symbol = "!")
+```
+
+
+
+
+    Seq('MAIVMAAQ!VPD')
+
+
+
+
+```python
+# Insert bacterial sequence
+gene = Seq("GTGAAAAAGATGCAATCTATCGTACTGCACTTTCCCTGGTTCTGGTCGCTCCCATGGCAGCACAGGCTGCGGAAATTACGTTCCCGTCACAATTACAGAGCGATCGTGATAATTCGTGGCTATTACTGGGATGGAGGTCACTGGCGCGACCACGGCTGGTGGAAACAACATTATGAATGGCGAGGCAATCGCTGGCACCTACACGGACCGCCGCCACCGCCGCGCCACCATAAGAAAGCTCCTCATGATCATCACGGCGGTCATGGTCCAGGCAAACATCACCGCTAA")
+```
+
+
+```python
+# Sequence given title
+gene.translate(table = "Bacterial")
+```
+
+
+
+
+    Seq('VKKMQSIVLHFPWFWSLPWQHRLRKLRSRHNYRAIVIIRGYYWDGGHWRDHGWW...HR*')
+
+
+
+
+```python
+# Translation ends at stop codon 
+gene.translate(table = "Bacterial", to_stop = True)
+```
+
+
+
+
+    Seq('VKKMQSIVLHFPWFWSLPWQHRLRKLRSRHNYRAIVIIRGYYWDGGHWRDHGWW...HHR')
+
+
+
+
+```python
+# Check sequence
+gene.translate(table = "Bacterial", cds = True)
+```
+
+
+
+
+    Seq('MKKMQSIVLHFPWFWSLPWQHRLRKLRSRHNYRAIVIIRGYYWDGGHWRDHGWW...HHR')
+
+
+
+
+```python
+# Import codon tables
+from Bio.Data import CodonTable
+```
+
+
+```python
+# Load standard table
+standard_table = CodonTable.unambiguous_dna_by_name["Standard"]
+```
+
+
+```python
+# Load "Vertebrate Mitochondrial" table
+mito_table = CodonTable.unambiguous_dna_by_name["Vertebrate Mitochondrial"]
+```
+
+
+```python
+# Display standard table
+print(standard_table)
+```
+
+    Table 1 Standard, SGC0
+    
+      |  T      |  C      |  A      |  G      |
+    --+---------+---------+---------+---------+--
+    T | TTT F   | TCT S   | TAT Y   | TGT C   | T
+    T | TTC F   | TCC S   | TAC Y   | TGC C   | C
+    T | TTA L   | TCA S   | TAA Stop| TGA Stop| A
+    T | TTG L(s)| TCG S   | TAG Stop| TGG W   | G
+    --+---------+---------+---------+---------+--
+    C | CTT L   | CCT P   | CAT H   | CGT R   | T
+    C | CTC L   | CCC P   | CAC H   | CGC R   | C
+    C | CTA L   | CCA P   | CAA Q   | CGA R   | A
+    C | CTG L(s)| CCG P   | CAG Q   | CGG R   | G
+    --+---------+---------+---------+---------+--
+    A | ATT I   | ACT T   | AAT N   | AGT S   | T
+    A | ATC I   | ACC T   | AAC N   | AGC S   | C
+    A | ATA I   | ACA T   | AAA K   | AGA R   | A
+    A | ATG M(s)| ACG T   | AAG K   | AGG R   | G
+    --+---------+---------+---------+---------+--
+    G | GTT V   | GCT A   | GAT D   | GGT G   | T
+    G | GTC V   | GCC A   | GAC D   | GGC G   | C
+    G | GTA V   | GCA A   | GAA E   | GGA G   | A
+    G | GTG V   | GCG A   | GAG E   | GGG G   | G
+    --+---------+---------+---------+---------+--
+
+
+
+```python
+# Display mitochondrial table
+print(mito_table)
+```
+
+    Table 2 Vertebrate Mitochondrial, SGC1
+    
+      |  T      |  C      |  A      |  G      |
+    --+---------+---------+---------+---------+--
+    T | TTT F   | TCT S   | TAT Y   | TGT C   | T
+    T | TTC F   | TCC S   | TAC Y   | TGC C   | C
+    T | TTA L   | TCA S   | TAA Stop| TGA W   | A
+    T | TTG L   | TCG S   | TAG Stop| TGG W   | G
+    --+---------+---------+---------+---------+--
+    C | CTT L   | CCT P   | CAT H   | CGT R   | T
+    C | CTC L   | CCC P   | CAC H   | CGC R   | C
+    C | CTA L   | CCA P   | CAA Q   | CGA R   | A
+    C | CTG L   | CCG P   | CAG Q   | CGG R   | G
+    --+---------+---------+---------+---------+--
+    A | ATT I(s)| ACT T   | AAT N   | AGT S   | T
+    A | ATC I(s)| ACC T   | AAC N   | AGC S   | C
+    A | ATA M(s)| ACA T   | AAA K   | AGA Stop| A
+    A | ATG M(s)| ACG T   | AAG K   | AGG Stop| G
+    --+---------+---------+---------+---------+--
+    G | GTT V   | GCT A   | GAT D   | GGT G   | T
+    G | GTC V   | GCC A   | GAC D   | GGC G   | C
+    G | GTA V   | GCA A   | GAA E   | GGA G   | A
+    G | GTG V(s)| GCG A   | GAG E   | GGG G   | G
+    --+---------+---------+---------+---------+--
+
+
+
+```python
+# Print stop codons for mitoochondrial table
+mito_table.stop_codons
+```
+
+
+
+
+    ['TAA', 'TAG', 'AGA', 'AGG']
+
+
+
+
+```python
+# Print start codons for mitochodnrial tables
+mito_table.start_codons
+```
+
+
+
+
+    ['ATT', 'ATC', 'ATA', 'ATG', 'GTG']
+
+
+
+
+```python
+# Create sequence 
+seq = Seq("ACGT")
+```
+
+
+```python
+# Confirm sequence
+"ACGT" == seq1
+```
+
+
+
+
+    True
+
+
+
+
+```python
+# Confirm sequence
+seq1 =="ACGT"
+```
+
+
+
+
+    True
+
+
+
+
+```python
+# Create undefined sequence
+unknown_seq = Seq(None, 10)
+```
+
+
+```python
+# Print undefined sequence
+unknown_seq
+```
+
+
+
+
+    Seq(None, length=10)
+
+
+
+
+```python
+# Find sequence length
+len(unknown_seq)
+```
+
+
+
+
+    10
+
+
+
+
+```python
+# Create new sequence with given length
+seq = Seq({117512683: "TTGAAAACCTGAATGTGAGAGTCAGTCAAGGATAGT"}, length = 159345973)
+```
+
+
+```python
+# Find segment at specific location
+seq[1000:1020]
+```
+
+
+
+
+    Seq(None, length=20)
+
+
+
+
+```python
+# Find segment at specific location
+seq[117512690:117512700]
+```
+
+
+
+
+    Seq('CCTGAATGTG')
+
+
+
+
+```python
+# Find segment and length at specific location
+seq[117512670:]
+```
+
+
+
+
+    Seq({13: 'TTGAAAACCTGAATGTGAGAGTCAGTCAAGGATAGT'}, length=41833303)
+
+
+
+
+```python
+# Create sequence
+seq = Seq("ACGT")
+```
+
+
+```python
+# Create undefined sequence
+undefined_seq = Seq(None, length = 10)
+```
+
+
+```python
+# Combine sequence with undefined sequence
+seq + undefined_seq + seq
+```
+
+
+
+
+    Seq({0: 'ACGT', 14: 'ACGT'}, length=18)
+
+
+
+
+```python
+# Create sequence
+my_seq = Seq("GCCATTGTAATGGGCCGCTGAAAGGGTGCCCGA")
+```
+
+
+```python
+# Import MutableSeq
+from Bio.Seq import MutableSeq
+```
+
+
+```python
+# Make sequence editable
+mutable_seq = MutableSeq(my_seq)
+```
+
+
+```python
+# Print sequence
+mutable_seq
+```
+
+
+
+
+    MutableSeq('GCCATTGTAATGGGCCGCTGAAAGGGTGCCCGA')
+
+
+
+
+```python
+# Change bse
+mutable_seq[5] = "C"
+```
+
+
+```python
+# Print sequence
+mutable_seq
+```
+
+
+
+
+    MutableSeq('GCCATCGTAATGGGCCGCTGAAAGGGTGCCCGA')
+
+
+
+
+```python
+# Remove base
+mutable_seq.remove("T")
+```
+
+
+```python
+# Print sequence
+mutable_seq
+```
+
+
+
+
+    MutableSeq('GCCACGTAATGGGCCGCTGAAAGGGTGCCCGA')
+
+
+
+
+```python
+# Reverse sequence
+mutable_seq.reverse()
+```
+
+
+```python
+# Print sequence
+mutable_seq
+```
+
+
+
+
+    MutableSeq('AGCCCGTGGGAAAGTCGCCGGGTAATGCACCG')
+
+
+
+
+```python
+# Convert sequence to original
+new_seq = Seq(mutable_seq)
+```
+
+
+```python
+# Print sequence
+new_seq
+```
+
+
+
+
+    Seq('AGCCCGTGGGAAAGTCGCCGGGTAATGCACCG')
+
+
+
+
+```python
+from Bio.Seq import reverse_complement, transcribe, back_transcribe, translate
+```
+
+
+```python
+my_string = "GCTGTTATGGGTCGTTGGAAGGGTGGTCGTGCTGCTGGTTAG"
+```
+
+
+```python
+reverse_complement(my_string)
+```
+
+
+
+
+    'CTAACCAGCAGCACGACCACCCTTCCAACGACCCATAACAGC'
+
+
+
+
+```python
+transcribe(my_string)
+```
+
+
+
+
+    'GCUGUUAUGGGUCGUUGGAAGGGUGGUCGUGCUGCUGGUUAG'
+
+
+
+
+```python
+back_transcribe(my_string)
+```
+
+
+
+
+    'GCTGTTATGGGTCGTTGGAAGGGTGGTCGTGCTGCTGGTTAG'
+
+
+
+
+```python
+translate(my_string)
+```
+
+
+
+
+    'AVMGRWKGGRAAG*'
+
+
+
 
 
 ## Sequence Annotations
