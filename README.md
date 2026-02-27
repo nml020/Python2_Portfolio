@@ -664,6 +664,7 @@ display(flann_matches)
 In this analysis, we took images of sunflowers for finding smaller train images in larger test images using using matching methods with heat map visualization and rectangles for specific location detection.
 
 ```python
+# Import libraries
 import cv2
 ```
 
@@ -684,16 +685,19 @@ import matplotlib.pyplot as plt
 
 
 ```python
+# Load training image 
 full = cv2.imread('training_sunflower.jpg')
 ```
 
 
 ```python
+# Convert image to color
 full = cv2.cvtColor(full, cv2.COLOR_BGR2RGB)
 ```
 
 
 ```python
+# Display image
 plt.imshow(full)
 ```
 
@@ -707,16 +711,19 @@ plt.imshow(full)
 
 
 ```python
+# Load testing image
 test = cv2.imread('testing_sunflower.jpg')
 ```
 
 
 ```python
+# Convert image to color
 test = cv2.cvtColor(test, cv2.COLOR_BGR2RGB)
 ```
 
 
 ```python
+# Display image
 plt.imshow(test)
 ```
 
@@ -730,6 +737,7 @@ plt.imshow(test)
 
 
 ```python
+# Print image dimensions
 print('Test image shape:', full.shape)
 print('Training image shape:', test.shape)
 ```
@@ -740,12 +748,15 @@ print('Training image shape:', test.shape)
 
 
 ```python
+# Define matching methods
 methods = ['cv2.TM_CCOEFF', 'cv2.TM_CCOEFF_NORMED', 'cv2.TM_CCORR', 'cv2.TM_CCORR_NORMED', 'cv2.TM_SQDIFF', 'cv2.TM_SQDIFF_NORMED']
 
 ```
 
 
 ```python
+# Instruction loop for each macthing method: copy, method, template, location, box detection
+# Heatmap display with detection results
 for m in methods:
     plt.figure()
     
