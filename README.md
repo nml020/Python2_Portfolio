@@ -26,6 +26,7 @@ This is the portfolio of the Python 2 codes that I learned through Winter 2025-2
 In this analysis, we used an image, particularly of a sloth, to learn the basics of image processing with modifications including color conservion and image rotation. 
 
 ```python
+# Import Libraries
 import numpy as np
 import matplotlib.pyplot as plt
 %matplotlib inline
@@ -38,11 +39,13 @@ import cv2
 
 
 ```python
+# Import image
 img = cv2.imread("sloth.jpeg")
 ```
 
 
 ```python
+# Check data type is loaded
 type(img)
 ```
 
@@ -55,6 +58,7 @@ type(img)
 
 
 ```python
+# Test and try to run image from wrong path
 img_wrong = cv2.imread('wrong/path/doesnt/abcdegh.jpg')
 ```
 
@@ -72,6 +76,7 @@ type(img_wrong)
 
 
 ```python
+# Display image
 plt.imshow(img)
 ```
 
@@ -80,17 +85,20 @@ plt.imshow(img)
 
     <matplotlib.image.AxesImage at 0x7efcdf41fd50>
 
-![Uploading image.png…]()
+<img width="555" height="406" alt="image" src="https://github.com/user-attachments/assets/1b53c8bf-e74c-441b-93ab-a6d321decf23" />
+
 
 
 
 
 ```python
+# Convert image to correct color display 
 fix_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 ```
 
 
 ```python
+# Display image
 plt.imshow(fix_img)
 ```
 
@@ -99,12 +107,13 @@ plt.imshow(fix_img)
 
     <matplotlib.image.AxesImage at 0x7efcdf3d6dd0>
 
+<img width="588" height="414" alt="image" src="https://github.com/user-attachments/assets/82be48ec-93f4-4681-aa6b-d95b4c360425" />
 
-![Uploading image.png…]()
 
 
 
 ```python
+# Give image dimensions
 img_gray = cv2.imread("sloth.jpeg", cv2.IMREAD_GRAYSCALE)
 img_gray.shape
 ```
@@ -118,6 +127,7 @@ img_gray.shape
 
 
 ```python
+# Display image
 plt.imshow(img_gray)
 ```
 
@@ -127,12 +137,14 @@ plt.imshow(img_gray)
     <matplotlib.image.AxesImage at 0x7efcddb49b10>
 
 
-![Uploading image.png…]()
+<img width="582" height="397" alt="image" src="https://github.com/user-attachments/assets/290ceeae-fb1e-4d9d-9494-f2b3c8397d69" />
+
 
 
 
 
 ```python
+# Convert image to gray and display
 plt.imshow(img_gray, cmap = "gray")
 ```
 
@@ -142,12 +154,14 @@ plt.imshow(img_gray, cmap = "gray")
     <matplotlib.image.AxesImage at 0x7efcddabc710>
 
 
-![Uploading image.png…]()
+<img width="580" height="399" alt="image" src="https://github.com/user-attachments/assets/364537b2-7422-4603-a4c5-e3fd07f097c3" />
+
 
 
 
 
 ```python
+# Give image dimensions
 fix_img.shape
 ```
 
@@ -160,6 +174,7 @@ fix_img.shape
 
 
 ```python
+# Resize image with new dimensions
 new_img = cv2.resize(fix_img,(1000,400))
 plt.imshow(new_img)
 ```
@@ -169,12 +184,14 @@ plt.imshow(new_img)
 
     <matplotlib.image.AxesImage at 0x7efcdc224f10>
 
-![Uploading image.png…]()
+<img width="636" height="279" alt="image" src="https://github.com/user-attachments/assets/61590f54-f4bb-4b79-8fa6-3a3061be5943" />
+
 
 
 
 
 ```python
+# Give image dimensions
 new_img.shape
 ```
 
@@ -187,6 +204,7 @@ new_img.shape
 
 
 ```python
+# Resize image with new height and width ratios
 w_ratio = 0.5
 h_ratio = 0.5
 
@@ -195,6 +213,7 @@ new_img = cv2.resize(fix_img, (0,0), fix_img, w_ratio, h_ratio)
 
 
 ```python
+# Display image
 plt.imshow(new_img)
 ```
 
@@ -204,12 +223,14 @@ plt.imshow(new_img)
     <matplotlib.image.AxesImage at 0x7efcdc207a10>
 
 
-![Uploading image.png…]()
+<img width="573" height="412" alt="image" src="https://github.com/user-attachments/assets/bfa94e2e-d0fb-45e6-b951-812bc013e8a5" />
+
 
 
 
 
 ```python
+# Give dimensions
 new_img.shape
 ```
 
@@ -222,6 +243,7 @@ new_img.shape
 
 
 ```python
+# Vertical Flip image
 flip_img = cv2.flip(fix_img, 0)
 plt.imshow(flip_img)
 ```
@@ -232,12 +254,14 @@ plt.imshow(flip_img)
     <matplotlib.image.AxesImage at 0x7efcdc174690>
 
 
-![Uploading image.png…]()
+<img width="576" height="399" alt="image" src="https://github.com/user-attachments/assets/3b093fce-d776-4009-b07c-175e6d6ee037" />
+
 
 
 
 
 ```python
+# Horizontal image flip
 flip_img2 = cv2.flip(fix_img, -1)
 plt.imshow(flip_img2)
 ```
@@ -247,12 +271,14 @@ plt.imshow(flip_img2)
 
     <matplotlib.image.AxesImage at 0x7efcdc0e3790>
 
-![Uploading image.png…]()
+<img width="615" height="414" alt="image" src="https://github.com/user-attachments/assets/4886179e-2463-475e-b919-ee6086043cc0" />
+
 
 
 
 
 ```python
+# Check image is saved in numpy
 type(fix_img)
 ```
 
@@ -265,6 +291,7 @@ type(fix_img)
 
 
 ```python
+# Save modified image
 cv2.imwrite('sloth_fixed_image.jpeg', flip_img)
 ```
 
