@@ -1114,7 +1114,7 @@ translate(my_string)
 
 
 ## Sequence Annotations
-In this analysis, 
+In this analysis, we learned how to take sequences with records, look at their information, see their annotations, rotate sequences, and generate reverse complements of them.
 
 ```python
 # Import SeqRecord
