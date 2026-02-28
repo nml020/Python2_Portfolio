@@ -5141,12 +5141,305 @@ aligner.score(target, query, strand = "+")
 
 
 
+## Blast and Challenge
+### Blast 
+In this analysis, we used Biopython with BLAST to take DNA from a BLAST database and print it through, looking for sequences mathcing a specific E-value. 
 
-## Blast 
+```python
+# Import NCBIWW
+from Bio.Blast import NCBIWWW
+```
 
 
-## Challenge 1
+```python
+# Register email
+NCBIWWW.email = "nml020@email.latech.edu"
+```
 
+
+```python
+# Search database
+result_handle = NCBIWWW.qblast("blastn", "nt", "8332116")
+```
+
+
+```python
+# Reference for data
+#https://github.com/biopython/biopython/blob/master/Doc/examples/m_cold.fasta
+```
+
+
+```python
+# Import Seq IO
+from Bio import SeqIO
+```
+
+
+```python
+# Create record from FASTA file
+record = SeqIO.read("m_cold.fasta", format = "fasta")
+```
+
+
+```python
+# Print record
+print(record)
+```
+
+    ID: gi|8332116|gb|BE037100.1|BE037100
+    Name: gi|8332116|gb|BE037100.1|BE037100
+    Description: gi|8332116|gb|BE037100.1|BE037100 MP14H09 MP Mesembryanthemum crystallinum cDNA 5' similar to cold acclimation protein, mRNA sequence
+    Number of features: 0
+    Seq('CACTAGTACTCGAGCGTNCTGCACCAATTCGGCACGAGCAAGTGACTACGTTNT...TTC')
+
+
+
+```python
+# Submit sequence 
+result_handle = NCBIWWW.qblast("blastn", "nt", record.seq)
+```
+
+
+```python
+# Write BLAST
+with open("m_cold.fasta", "w") as out_handle:
+    out_handle.write(result_handle.read())
+result_handle.close()
+```
+
+
+```python
+# Import NCBIXML
+from Bio.Blast import NCBIXML
+```
+
+
+```python
+# Open BLAST file
+result_handle = open("my_blast.xml")
+```
+
+
+```python
+# Read file
+blast_record = NCBIXML.read(result_handle)
+```
+
+
+```python
+# Define E-value 
+E_VALUE_THRESH = 0.04
+```
+
+
+```python
+# Check alignments
+# Print alignments
+for alignment in blast_record.alignments:
+    for hsp in alignment.hsps:
+        if hsp.expect < E_VALUE_THRESH:
+            print("****ALIGNMENT****")
+            print("sequence:", alignment.title)
+            print("length:", alignment.length)
+            print("e value:", hsp.expect)
+            print(hsp.query[0:75] + "...")
+            print(hsp.match[0:75] + "...")
+            print(hsp.sbjct[0:75] + "...")
+```
+
+    ****ALIGNMENT****
+    sequence: gi|2618480339|ref|XM_048479995.2| PREDICTED: Ziziphus jujuba cold-regulated 413 plasma membrane protein 2 (LOC107424728), mRNA
+    length: 1028
+    e value: 3.52915e-72
+    GAA-CAGAAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGA...
+    ||| || ||||||||||| |  ||| |||  ||||| |||| |||||||| |   |||  |||| |  ||||  |...
+    GAAGCA-AAAATGGGGAG-G--ATGGAGTTTTTGGCTATGAGAACTGATCCA---GCCACGGCTGACTTGATAAA...
+    ****ALIGNMENT****
+    sequence: gi|1227938481|ref|XM_022049453.1| PREDICTED: Carica papaya cold-regulated 413 plasma membrane protein 2-like (LOC110820077), mRNA
+    length: 1009
+    e value: 1.27832e-66
+    AGAAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCG...
+    ||||||||||||| | |  ||| || ||||| ||||| ||||||||   ||||   ||| || | |||  ||| |...
+    AGAAAATGGGGAG-G-ATGGAA-TATTTGGCTATGAAGACTGATCA---GGCCACTGCTGATCTCATCACTTCTG...
+    ****ALIGNMENT****
+    sequence: gi|2395983796|ref|XM_025094967.2| PREDICTED: Citrus sinensis cold-regulated 413 plasma membrane protein 2 (LOC102620025), transcript variant X1, mRNA
+    length: 980
+    e value: 3.57944e-62
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||| ||| ||| | |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAAT-GGG-GAG-ATTGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|1350315641|ref|XM_024180293.1| PREDICTED: Citrus clementina cold-regulated 413 plasma membrane protein 2 (LOC18037141), transcript variant X4, mRNA
+    length: 868
+    e value: 3.57944e-62
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||| ||| ||| | |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAAT-GGG-GAG-ATTGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|2395983797|ref|XM_006466624.4| PREDICTED: Citrus sinensis cold-regulated 413 plasma membrane protein 2 (LOC102620025), transcript variant X2, mRNA
+    length: 968
+    e value: 3.57944e-62
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||| ||| ||| | |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAAT-GGG-GAG-ATTGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|1350315638|ref|XM_006425719.2| PREDICTED: Citrus clementina cold-regulated 413 plasma membrane protein 2 (LOC18037141), transcript variant X3, mRNA
+    length: 893
+    e value: 3.57944e-62
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||| ||| ||| | |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAAT-GGG-GAG-ATTGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|2395983800|ref|XM_006466626.4| PREDICTED: Citrus sinensis cold-regulated 413 plasma membrane protein 2 (LOC102620025), transcript variant X5, mRNA
+    length: 913
+    e value: 3.57944e-62
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||| ||| ||| | |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAAT-GGG-GAG-ATTGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|1350315636|ref|XM_006425716.2| PREDICTED: Citrus clementina cold-regulated 413 plasma membrane protein 2 (LOC18037141), transcript variant X2, mRNA
+    length: 881
+    e value: 3.57944e-62
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||| ||| ||| | |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAAT-GGG-GAG-ATTGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|2395983798|ref|XM_006466623.4| PREDICTED: Citrus sinensis cold-regulated 413 plasma membrane protein 2 (LOC102620025), transcript variant X3, mRNA
+    length: 1052
+    e value: 3.57944e-62
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||| ||| ||| | |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAAT-GGG-GAG-ATTGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|2395983799|ref|XM_006466625.3| PREDICTED: Citrus sinensis cold-regulated 413 plasma membrane protein 2 (LOC102620025), transcript variant X4, mRNA
+    length: 978
+    e value: 3.57944e-62
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||| ||| ||| | |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAAT-GGG-GAG-ATTGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|1350315634|ref|XM_006425717.2| PREDICTED: Citrus clementina cold-regulated 413 plasma membrane protein 2 (LOC18037141), transcript variant X1, mRNA
+    length: 952
+    e value: 3.57944e-62
+    AAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATA...
+    |||| ||| ||| | |||| || ||||| |||||||||||| |   ||  |  ||  |  |||||   || ||| ...
+    AAAT-GGG-GAG-ATTGAATTATTTGGCTATGAAAACTGATGATCAGGTTGCAGCAGAGTTGATCAGCTCTGATT...
+    ****ALIGNMENT****
+    sequence: gi|2526866810|ref|XM_057645500.1| PREDICTED: Actinidia eriantha cold-regulated 413 plasma membrane protein 2-like (LOC130785340), mRNA
+    length: 1152
+    e value: 1.28739e-61
+    AAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGAT...
+    ||||| ||| ||| |||| | || ||||| ||||| || |||| |  |||  || | ||| ||||| |||| || ...
+    AAAAT-GGG-GAG-AATGGATTATTTGGCGATGAAGACCGATCCAGCGGC--TGCCGAAT-TGATCAATTCGGAC...
+    ****ALIGNMENT****
+    sequence: gi|1768569081|ref|XM_031406607.1| PREDICTED: Pistacia vera cold-regulated 413 plasma membrane protein 2-like (LOC116120644), mRNA
+    length: 982
+    e value: 3.60485e-57
+    TCCGATATCAATGAGCTTAAAATGGCAACAATGAGGCTCATCAATGATGCTAGTATGCTCGGTCATTACGGGTTT...
+    || |||||||||||||||||  | ||  ||| || ||| || ||  | || | ||  ||||||  |   || |||...
+    TCTGATATCAATGAGCTTAAGCTTGCTGCAAAGAAGCTTATTAACCACGCAACTAAACTCGGTGGTCTTGGCTTT...
+    ****ALIGNMENT****
+    sequence: gi|1954740698|ref|XM_038867092.1| PREDICTED: Tripterygium wilfordii cold-regulated 413 plasma membrane protein 2 (LOC120014952), mRNA
+    length: 999
+    e value: 3.60485e-57
+    GAACAGAAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGAT...
+    ||| ||||||| ||| ||| || | | || ||||| ||||| |||||||    ||  ||||   || |||||   ...
+    GAAAAGAAAAT-GGG-GAG-AACGGATTATTTGGCGATGAAGACTGATC---CGGTTGTGGACGATTTGATCAGC...
+    ****ALIGNMENT****
+    sequence: gi|2526831378|ref|XM_057642435.1| PREDICTED: Actinidia eriantha cold-regulated 413 plasma membrane protein 2-like (LOC130782944), mRNA
+    length: 1214
+    e value: 3.60485e-57
+    GAAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGA...
+    |||||| ||| ||| |||| | || ||||| ||||| || |||| |   | | || | ||| ||||| |||||||...
+    GAAAAT-GGG-GAG-AATGGATTATTTGGCGATGAAGACCGATCCAGCTG-C-TGCCGAAT-TGATCAATTCCGA...
+    ****ALIGNMENT****
+    sequence: gi|1350280614|ref|XM_024170292.1| PREDICTED: Morus notabilis cold-regulated 413 plasma membrane protein 2 (LOC21394987), mRNA
+    length: 1020
+    e value: 2.16956e-54
+    TACTTGGCCATGAAAACTGATCAATTGGCCGTGGCTAATATGATCGATTCCGATATCAATGAGCTTAAAATGGCA...
+    || |||||||||||||| || | |   |||  |||| || ||||  |||| |||||||| ||||| || || || ...
+    TATTTGGCCATGAAAACGGACCCA---GCCACGGCTGATTTGATAAATTCTGATATCAACGAGCTGAAGATCGCT...
+    ****ALIGNMENT****
+    sequence: gi|2350562715|ref|XM_052350285.1| PREDICTED: Diospyros lotus cold-regulated 413 plasma membrane protein 2-like (LOC127810688), mRNA
+    length: 1265
+    e value: 1.0094e-52
+    GGGTTTGGCACTCATTTCCTCAAATGGCTCGCCTGCCTTGCGGCTATTTACTTGTTGATATTGGATCGAACAAAC...
+    || || ||||||   |||||||||||| | |||| | |||| |||||||||||||||||||||||||||||||||...
+    GGCTTCGGCACTTCCTTCCTCAAATGGATTGCCTCCTTTGCTGCTATTTACTTGTTGATATTGGATCGAACAAAC...
+    ****ALIGNMENT****
+    sequence: gi|1585724761|ref|XM_028202722.1| PREDICTED: Camellia sinensis cold-regulated 413 plasma membrane protein 2-like (LOC114262355), mRNA
+    length: 910
+    e value: 3.63044e-52
+    AGAAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAAT-TGGCCGTGGCTAATATGATCGATTCC...
+    |||||||||||||  ||||| |||| ||||| ||||| || |||||    | ||    | |||  |||  |||||...
+    AGAAAATGGGGAGGAAAATGGAGTATTTGGCAATGAAGACCGATCATCCAGCCCCAACCCAAT-CGATGAATTCC...
+    ****ALIGNMENT****
+    sequence: gi|2583747300|ref|XM_059787294.1| PREDICTED: Cornus florida cold-regulated 413 plasma membrane protein 2-like (LOC132285128), mRNA
+    length: 1126
+    e value: 1.30574e-51
+    AGAAAATGGGGAGAGAAATGAAGTACTTGGCCATGAAAACTGATCAATTGGCC-GTGGCTAATATGATCGATTCC...
+    ||||||| ||| |||||| | |||| ||||| |||||||||||||    ||||   | | ||| ||||| |||||...
+    AGAAAAT-GGG-GAGAAA-GGAGTATTTGGCTATGAAAACTGATC---CGGCCACAGCCGAAT-TGATCAATTCC...
+    ****ALIGNMENT****
+    sequence: gi|2118882425|ref|XM_044613294.1| PREDICTED: Mangifera indica cold-regulated 413 plasma membrane protein 2-like (LOC123198583), mRNA
+    length: 1083
+    e value: 4.69627e-51
+    CTCATTTCCTCAAATGGCTCGCCTGCCTTGCGGCTATTTACTTGTTGATATTGGATCGAACAAACTGGAGAACCA...
+    ||| ||| ||||||||| | |||| | |||| ||||||||||||||||||||||||||||||||||||||||| |...
+    CTC-TTTTCTCAAATGGGTTGCCTCCTTTGCTGCTATTTACTTGTTGATATTGGATCGAACAAACTGGAGAACAA...
+    ****ALIGNMENT****
+    sequence: gi|2537875835|ref|XM_021822463.2| PREDICTED: Hevea brasiliensis cold-regulated 413 plasma membrane protein 2 (LOC110663212), transcript variant X1, mRNA
+    length: 940
+    e value: 2.82643e-48
+    CGGGTTTGGCACTCATTTCCTCAAATGGCTCGCCTGCCTTGCGGCTATTTACTTGTTGATATTGGATCGAACAAA...
+    ||| ||||| |||  ||| ||||||||| | ||||   |||| || || || ||| |||||||||||||||||||...
+    CGGCTTTGGTACTTCTTTTCTCAAATGGGTTGCCTCTTTTGCTGCCATATATTTGCTGATATTGGATCGAACAAA...
+    ****ALIGNMENT****
+    sequence: gi|1220047144|ref|XM_021953815.1| PREDICTED: Prunus avium cold-regulated 413 plasma membrane protein 2-like (LOC110753022), mRNA
+    length: 894
+    e value: 2.82643e-48
+    TGATCGATTCCGATATCAATGAGCTTAAAATGGCAACAATGAGGCTCATCAATGATGCTAGTATGCTCGGTCATT...
+    ||||  |||| || |||||||| || || || ||| | | ||  |||||||| ||||| | || ||| |||   |...
+    TGATAAATTCAGACATCAATGATCTCAAGATTGCAGCCAAGAAACTCATCAAAGATGCCACTAAGCTTGGTGGGT...
+    ****ALIGNMENT****
+    sequence: gi|1220094463|ref|XM_021978417.1| PREDICTED: Prunus avium cold-regulated 413 plasma membrane protein 2-like (LOC110773902), mRNA
+    length: 896
+    e value: 2.82643e-48
+    TGATCGATTCCGATATCAATGAGCTTAAAATGGCAACAATGAGGCTCATCAATGATGCTAGTATGCTCGGTCATT...
+    ||||  |||| || |||||||| || || || ||| | | ||  |||||||| ||||| | || ||| |||   |...
+    TGATAAATTCAGACATCAATGATCTCAAGATTGCAGCCAAGAAACTCATCAAAGATGCCACTAAGCTTGGTGGGT...
+    ****ALIGNMENT****
+    sequence: gi|2118854713|ref|XM_044609109.1| PREDICTED: Mangifera indica cold-regulated 413 plasma membrane protein 2-like (LOC123195424), mRNA
+    length: 742
+    e value: 1.71315e-40
+    GGGTTTGGCA-CTCATTTCCTCAAATGGCTCGCCTGCCTTGCGGCTATTTACTTGTTGATATTGGATCGAACAAA...
+    || ||||| | ||| ||| ||| ||||||| |||| | |||| |||||||| |||||||||||||||||||||||...
+    GGCTTTGGAATCTC-TTTTCTCCAATGGCTTGCCTCCTTTGCTGCTATTTATTTGTTGATATTGGATCGAACAAA...
+    ****ALIGNMENT****
+    sequence: gi|2537875838|ref|XM_021822464.2| PREDICTED: Hevea brasiliensis cold-regulated 413 plasma membrane protein 2 (LOC110663212), transcript variant X2, mRNA
+    length: 924
+    e value: 4.83107e-31
+    CGGGTTTGGCACTCATTTCCTCAAATGGCTCGCCTGCCTTGCGGCTATTTACTTGTTGATATTGGATCGAACAAA...
+    ||| ||||| |||  ||| ||||||||| | ||||   |||| || || || ||| |||||||||||||||||||...
+    CGGCTTTGGTACTTCTTTTCTCAAATGGGTTGCCTCTTTTGCTGCCATATATTTGCTGATATTGGATCGAACAAA...
+    ****ALIGNMENT****
+    sequence: gi|2739574736|gb|CP157410.1| Ziziphus jujuba isolate TW-2024b chromosome 08
+    length: 27596186
+    e value: 1.06064e-17
+    TTACTTGTTGATATTGGATCGAACAAACTGGAGAACCAACATGCTCACGTCACTTTTAGTCCCTTACATATTCCT...
+    ||| |||||||||||||||||||||||||||||||| || ||||| || ||||||||||| ||||| || ||| |...
+    TTATTTGTTGATATTGGATCGAACAAACTGGAGAACAAATATGCTTACTTCACTTTTAGTTCCTTATATCTTCTT...
+    ****ALIGNMENT****
+    sequence: gi|3129608210|emb|OZ375381.1| Ziziphus lotus genome assembly, chromosome: 8
+    length: 22133894
+    e value: 4.9347e-16
+    TTACTTGTTGATATTGGATCGAACAAACTGGAGAACCAACATGCTCACGTCACTTTTAGTCCCTTACATATTCCT...
+    ||| |||||||||||||||||||||||||||||||| || ||||| || ||||| ||||| ||||| || ||| |...
+    TTATTTGTTGATATTGGATCGAACAAACTGGAGAACAAATATGCTTACTTCACTCTTAGTTCCTTATATCTTCTT...
+
+
+### Challenge 
+In this analysis, 
 
 ## Open CV
 ### Open CV 1: "OpenCVBasics"
