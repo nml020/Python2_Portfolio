@@ -3572,14 +3572,6 @@ SeqIO.write(records, "rev_comp.fasta", "fasta")
     18
 
 
-
-
-```python
-
-```
-
-
-
 ## Multiple Sequence Alignment 
 ### Sequence Alignment
 In this analysis, we used Biopython for sequence alignment reading, manuipulations, and conversions while generating matricecs and a phylogenetic tree.
@@ -4381,10 +4373,774 @@ Phylo.draw_ascii(tree)
          | gi|6273284|gb|AF191658.1|AF191658
     
 
-
-
 ### Pairwise Alignment
-In this analysis, 
+In this analysis, we used Biopython to compare DNA sequence alignments in the local and global sphere with creating score, adjusting the scores with evaluating forwards and backwards alignments.
+
+```python
+# Import Align
+from Bio import Align
+```
+
+
+```python
+# Create aligner
+aligner = Align.PairwiseAligner()
+```
+
+
+```python
+# Create aligner with match score 1
+aligner = Align.PairwiseAligner(match_score = 1.0)
+```
+
+
+```python
+# Define target sequence
+target = "GAACT"
+```
+
+
+```python
+# Define query sequence
+query = "GAT"
+```
+
+
+```python
+# Calculate score for target and query sequences
+score = aligner.score(target,query)
+```
+
+
+```python
+# Print score
+score
+```
+
+
+
+
+    3.0
+
+
+
+
+```python
+# Create alignment
+alignments = aligner.align(target, query)
+```
+
+
+```python
+# Print alignments
+for alignment in alignments:
+    print(alignment)
+```
+
+    target            0 GAACT 5
+                      0 ||--| 5
+    query             0 GA--T 3
+    
+    target            0 GAACT 5
+                      0 |-|-| 5
+    query             0 G-A-T 3
+    
+
+
+
+```python
+# Change mode to local
+aligner.mode = "local"
+```
+
+
+```python
+# Create target sequence
+target = "AGAACTC"
+```
+
+
+```python
+# Create query sequence
+query = "GAACT"
+```
+
+
+```python
+# Score alignments
+score = aligner.score(target,query)
+```
+
+
+```python
+# Print score
+score
+```
+
+
+
+
+    5.0
+
+
+
+
+```python
+# Create alignment
+alignments = aligner.align(target,query)
+```
+
+
+```python
+# Print alignment
+for alignment in alignments:
+    print(alignment)
+```
+
+    target            1 GAACT 6
+                      0 ||||| 5
+    query             0 GAACT 5
+    
+
+
+
+```python
+# Print aligner
+print(aligner)
+```
+
+    Pairwise sequence aligner with parameters
+      wildcard: None
+      match_score: 1.000000
+      mismatch_score: 0.000000
+      target_internal_open_gap_score: 0.000000
+      target_internal_extend_gap_score: 0.000000
+      target_left_open_gap_score: 0.000000
+      target_left_extend_gap_score: 0.000000
+      target_right_open_gap_score: 0.000000
+      target_right_extend_gap_score: 0.000000
+      query_internal_open_gap_score: 0.000000
+      query_internal_extend_gap_score: 0.000000
+      query_left_open_gap_score: 0.000000
+      query_left_extend_gap_score: 0.000000
+      query_right_open_gap_score: 0.000000
+      query_right_extend_gap_score: 0.000000
+      mode: local
+    
+
+
+
+```python
+# Show aligner algorithm 
+aligner.algorithm
+```
+
+
+
+
+    'Smith-Waterman'
+
+
+
+
+```python
+# Print epsilon alinger
+aligner.epsilon
+```
+
+
+
+
+    1e-06
+
+
+
+
+```python
+# Import Align 
+from Bio import Align
+```
+
+
+```python
+# Create alignment 
+aligner = Align.PairwiseAligner()
+```
+
+
+```python
+# Create target sequence
+target = "GAACT"
+```
+
+
+```python
+# Create query sequence
+query = "GAT"
+```
+
+
+```python
+# Create alignment with sequences
+alignments = aligner.align(target,query)
+```
+
+
+```python
+# Grab first alignment
+alignment = alignments[0]
+```
+
+
+```python
+# Print alignment
+alignment
+```
+
+
+
+
+    <Alignment object (2 rows x 5 columns) at 0x7f6008242710>
+
+
+
+
+```python
+# Print alignment score
+alignment.score
+```
+
+
+
+
+    3.0
+
+
+
+
+```python
+# Print target sequence
+alignment.target
+```
+
+
+
+
+    'GAACT'
+
+
+
+
+```python
+# Print query sequence
+alignment.query
+```
+
+
+
+
+    'GAT'
+
+
+
+
+```python
+# Print alignment
+print(alignment)
+```
+
+    target            0 GAACT 5
+                      0 ||--| 5
+    query             0 GA--T 3
+    
+
+
+
+```python
+# Print alignment coordinates
+alignment.coordinates
+```
+
+
+
+
+    array([[0, 2, 4, 5],
+           [0, 2, 2, 3]])
+
+
+
+
+```python
+# Print alignment length
+len(alignment)
+```
+
+
+
+
+    2
+
+
+
+
+```python
+# Print alignment shape
+alignment.shape
+```
+
+
+
+
+    (2, 5)
+
+
+
+
+```python
+# Change mode to local 
+aligner.mode = "local"
+```
+
+
+```python
+# Create alignment 
+local_alignments = aligner.align("TGAACT", "GAC")
+```
+
+
+```python
+# Create best match for alignment 
+local_alignment = local_alignments[0]
+```
+
+
+```python
+# Print alignment 
+print(local_alignment)
+```
+
+    target            1 GAAC 5
+                      0 ||-| 4
+    query             0 GA-C 3
+    
+
+
+
+```python
+# Print alignment shape
+local_alignment.shape
+```
+
+
+
+
+    (2, 4)
+
+
+
+
+```python
+# Change mode to global
+aligner.mode = "global"
+```
+
+
+```python
+# Create aligner
+aligner = Align.PairwiseAligner(match = 1.0, mismatch_score = -10)
+```
+
+
+```python
+# Print aligner
+print(aligner)
+```
+
+    Pairwise sequence aligner with parameters
+      wildcard: None
+      match_score: 1.000000
+      mismatch_score: -10.000000
+      target_internal_open_gap_score: 0.000000
+      target_internal_extend_gap_score: 0.000000
+      target_left_open_gap_score: 0.000000
+      target_left_extend_gap_score: 0.000000
+      target_right_open_gap_score: 0.000000
+      target_right_extend_gap_score: 0.000000
+      query_internal_open_gap_score: 0.000000
+      query_internal_extend_gap_score: 0.000000
+      query_left_open_gap_score: 0.000000
+      query_left_extend_gap_score: 0.000000
+      query_right_open_gap_score: 0.000000
+      query_right_extend_gap_score: 0.000000
+      mode: global
+    
+
+
+
+```python
+# Create alignments
+alignments = aligner.align("AAACAAA", "AAAGAAA")
+```
+
+
+```python
+# Print alignment length
+len(alignments)
+```
+
+
+
+
+    2
+
+
+
+
+```python
+# Print first alignment 
+print(alignments[0])
+```
+
+    target            0 AAAC-AAA 7
+                      0 |||--||| 8
+    query             0 AAA-GAAA 7
+    
+
+
+
+```python
+# Print second alignment 
+print(alignments[1])
+```
+
+    target            0 AAA-CAAA 7
+                      0 |||--||| 8
+    query             0 AAAG-AAA 7
+    
+
+
+
+```python
+# Print alignment 
+print(local_alignment)
+```
+
+    target            1 GAAC 5
+                      0 ||-| 4
+    query             0 GA-C 3
+    
+
+
+
+```python
+# Sort alignment
+local_alignment.sort()
+```
+
+
+```python
+# Print alignment 
+print(local_alignment)
+```
+
+    target            0 GA-C 3
+                      0 ||-| 4
+    query             1 GAAC 5
+    
+
+
+
+```python
+# Import Align
+from Bio import Align
+```
+
+
+```python
+# Import reverse complement 
+from Bio.Seq import reverse_complement
+```
+
+
+```python
+# Create target sequence
+target = "AAACCC"
+```
+
+
+```python
+# Create query sequence
+query = "AACC"
+```
+
+
+```python
+# Create aligner
+aligner = Align.PairwiseAligner(mismatch_score= -1, internal_gap_score= -1)
+```
+
+
+```python
+# Score aligner
+aligner.score(target, query)
+```
+
+
+
+
+    4.0
+
+
+
+
+```python
+# Score aligner againt reverse complement 
+aligner.score(target, reverse_complement(query))
+```
+
+
+
+
+    0.0
+
+
+
+
+```python
+# Score aligner with reverse complement 
+aligner.score(target, reverse_complement(query), strand = "-")
+```
+
+
+
+
+    4.0
+
+
+
+
+```python
+# Score aligner
+aligner.score(target, query, strand = "-")
+```
+
+
+
+
+    0.0
+
+
+
+
+```python
+# Create alignment
+alignments = aligner.align(target,query)
+```
+
+
+```python
+# Print aligment length
+len(alignments)
+```
+
+
+
+
+    1
+
+
+
+
+```python
+# Print  first alignment 
+print(alignments[0])
+```
+
+    target            0 AAACCC 6
+                      0 -||||- 6
+    query             0 -AACC- 4
+    
+
+
+
+```python
+# Print first alignment in BED format
+print(alignments[0].format("bed"))
+```
+
+    target	1	5	query	4.0	+	1	5	0	1	4,	0,
+    
+
+
+
+```python
+# Create aligner with reverse complement 
+alignments = aligner.align(target, reverse_complement(query), strand = "-")
+```
+
+
+```python
+# Print alignment in BED format
+print(alignments[0].format("bed"))
+```
+
+    target	1	5	query	4.0	-	1	5	0	1	4,	0,
+    
+
+
+
+```python
+# Create alignment 
+alignments = aligner.align(target, query, strand = "-")
+```
+
+
+```python
+# Print alignment length
+len(alignments)
+```
+
+
+
+
+    2
+
+
+
+
+```python
+# Print first alignment 
+print(alignments[0])
+```
+
+    target            0 AAACCC----  6
+                      0 ---------- 10
+    query             4 ------GGTT  0
+    
+
+
+
+```python
+# Print second alignment 
+print(alignments[1])
+```
+
+    target            0 ----AAACCC  6
+                      0 ---------- 10
+    query             4 GGTT------  0
+    
+
+
+
+```python
+# Change left gap score
+aligner.left_gap_score = -0.5
+```
+
+
+```python
+# Change right gap score
+aligner.right_gap_score = -0.2
+```
+
+
+```python
+# Score aligner
+aligner.score(target,query)
+```
+
+
+
+
+    3.3
+
+
+
+
+```python
+# Create alignments
+alignments = aligner.align(target, query)
+```
+
+
+```python
+# Print alignment length
+len(alignments)
+```
+
+
+
+
+    1
+
+
+
+
+```python
+# Print first alignment 
+print(alignments[0])
+```
+
+    target            0 AAACCC 6
+                      0 -||||- 6
+    query             0 -AACC- 4
+    
+
+
+
+```python
+# Create alignment with reverse complement
+alignments = aligner.align(target, reverse_complement(query), strand = "-")
+```
+
+
+```python
+# Print alignment 
+print(alignments)
+```
+
+    <Bio.Align.PairwiseAlignments object at 0x7f600819e890>
+
+
+
+```python
+# Score aligner with reverse complement
+aligner.score(target, reverse_complement(query), strand = "-")
+```
+
+
+
+
+    3.3
+
+
+
+
+```python
+# Print first alignment
+print(alignments[0])
+```
+
+    target            0 AAACCC 6
+                      0 -||||- 6
+    query             4 -AACC- 0
+    
+
+
+
+```python
+# Print score for forward strand
+aligner.score(target, query, strand = "+")
+```
+
+
+
+
+    3.3
+
+
+
+
 
 ## Blast 
 
