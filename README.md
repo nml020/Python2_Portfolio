@@ -2103,7 +2103,7 @@ shifted.annotations = record.annotations.copy()
 
 
 ```python
-# Print updated annotations names
+# Print updated annotation key
 shifted.annotations.keys()
 ```
 
@@ -2166,13 +2166,17 @@ print("%s %i %i %i %i" % (rc.id, len(rc), len(rc.features), len(rc.dbxrefs), len
 
 
 ## Sequence I/O
-
+In this analysis, we imported code from GenBank and FASTA files while creating reverse complements, converting, and writing resulting sequences.
 ```python
+# Import SeqIO
 from Bio import SeqIO
 ```
 
 
 ```python
+# Create loop for FASTA file
+# Print sequence ID
+# Print DNA sequence and length
 for seq_record in SeqIO.parse("ls_orchid.fasta.txt", "fasta"):
     print(seq_record.id)
     print(repr(seq_record.seq))
@@ -2465,6 +2469,9 @@ for seq_record in SeqIO.parse("ls_orchid.fasta.txt", "fasta"):
 
 
 ```python
+# Create loop for GenBank file
+# Print record ID
+# Print sequence and length
 for seq_record in SeqIO.parse("ls_orchid.gbk.txt", "genbank"):
     print(seq_record.id)
     print(repr(seq_record.seq))
@@ -2757,11 +2764,13 @@ for seq_record in SeqIO.parse("ls_orchid.gbk.txt", "genbank"):
 
 
 ```python
+# Create list of identifiers for GenBank file
 identifiers = [seq_record.id for seq_record in SeqIO.parse("ls_orchid.gbk.txt", "genbank")]
 ```
 
 
 ```python
+# List identifiers
 identifiers
 ```
 
@@ -2867,16 +2876,19 @@ identifiers
 
 
 ```python
+# Create iterator for FASTA file
 record_iterator = SeqIO.parse("ls_orchid.fasta.txt", "fasta")
 ```
 
 
 ```python
+# Retrieve first sequence
 first_record = next(record_iterator)
 ```
 
 
 ```python
+# Print first sequence ID
 print(first_record.id)
 ```
 
@@ -2885,6 +2897,7 @@ print(first_record.id)
 
 
 ```python
+# Print sequence description
 print(first_record.description)
 ```
 
@@ -2893,11 +2906,13 @@ print(first_record.description)
 
 
 ```python
+# Retrieve second sequence
 second_record = next(record_iterator)
 ```
 
 
 ```python
+# Print second sequence ID
 print(second_record.id)
 ```
 
@@ -2906,6 +2921,7 @@ print(second_record.id)
 
 
 ```python
+# Print sequence description
 print(second_record.description)
 ```
 
@@ -2914,11 +2930,13 @@ print(second_record.description)
 
 
 ```python
+# Store GenBank files in a list
 records = list(SeqIO.parse("ls_orchid.gbk.txt", "genbank"))
 ```
 
 
 ```python
+# Print amount of records
 print("found %i records" % len(records))
 ```
 
@@ -2927,6 +2945,7 @@ print("found %i records" % len(records))
 
 
 ```python
+# Print record label
 print("The last record")
 last_record = records[-1]
 print(last_record.id)
@@ -2942,6 +2961,7 @@ print(len(last_record))
 
 
 ```python
+# Print record label
 print("The first record")
 first_record = records[-3]
 print(first_record.id)
@@ -2957,16 +2977,19 @@ print(len(first_record))
 
 
 ```python
+# Create new GenBank iterator
 record_iterator = SeqIO.parse("ls_orchid.gbk.txt", "genbank")
 ```
 
 
 ```python
+# Create first record
 first_record = next(record_iterator)
 ```
 
 
 ```python
+# Print record
 print(first_record)
 ```
 
@@ -2991,6 +3014,7 @@ print(first_record)
 
 
 ```python
+# Print record with annotations
 print(first_record.annotations)
 ```
 
@@ -2999,6 +3023,7 @@ print(first_record.annotations)
 
 
 ```python
+# Print annotation keys
 print(first_record.annotations.keys())
 ```
 
@@ -3007,6 +3032,7 @@ print(first_record.annotations.keys())
 
 
 ```python
+# Print annotation field values
 print(first_record.annotations.values())
 ```
 
@@ -3015,6 +3041,7 @@ print(first_record.annotations.values())
 
 
 ```python
+# Print "source" annotations
 print(first_record.annotations["source"])
 ```
 
@@ -3023,6 +3050,7 @@ print(first_record.annotations["source"])
 
 
 ```python
+# Print organism name
 print(first_record.annotations["organism"])
 ```
 
@@ -3031,17 +3059,20 @@ print(first_record.annotations["organism"])
 
 
 ```python
+# Create list to store species names
 all_species = []
 ```
 
 
 ```python
+# Add all organisms to species storange from GenBank
 for seq_record in SeqIO.parse("ls_orchid.gbk.txt", "genbank"):
     all_species.append(seq_record.annotations["organism"])
 ```
 
 
 ```python
+# Print all species names
 print(all_species)
 ```
 
@@ -3050,6 +3081,7 @@ print(all_species)
 
 
 ```python
+# Same as code above
 all_species = [
     seq_record.annotations["organism"]
     for seq_record in SeqIO.parse("ls_orchid.gbk.txt", "genbank")
@@ -3058,6 +3090,7 @@ all_species = [
 
 
 ```python
+# Print all species
 print(all_species)
 ```
 
@@ -3066,17 +3099,20 @@ print(all_species)
 
 
 ```python
+# Create empty list for species storage
 all_species = []
 ```
 
 
 ```python
+# Add all organisms to species storange from FASTA
 for seq_record in SeqIO.parse("ls_orchid.fasta.txt", "fasta"):
     all_species.append(seq_record.description.split()[1])
 ```
 
 
 ```python
+# Print species names
 print(all_species)
 ```
 
@@ -3085,16 +3121,19 @@ print(all_species)
 
 
 ```python
+# Create iterator for FASTA 
 record_iterator = SeqIO.parse("ls_orchid.fasta.txt", "fasta")
 ```
 
 
 ```python
+# Retrieve first sequence record
 first_record = next(record_iterator)
 ```
 
 
 ```python
+# Print first record ID
 first_record.id
 ```
 
@@ -3107,11 +3146,13 @@ first_record.id
 
 
 ```python
+# Edit ID
 first_record.id = "new_id"
 ```
 
 
 ```python
+# Confirm ID
 first_record.id
 ```
 
@@ -3124,6 +3165,7 @@ first_record.id
 
 
 ```python
+# Print first record
 first_record
 ```
 
@@ -3136,11 +3178,13 @@ first_record
 
 
 ```python
+# Update record description
 first_record.description = first_record.id + " " + "Mutations induced randomly"
 ```
 
 
 ```python
+# Print edited record
 print(first_record.format("fasta"[:200]))
 ```
 
@@ -3163,16 +3207,21 @@ print(first_record.format("fasta"[:200]))
 
 
 ```python
+# Import Seq
 from Bio.Seq import Seq
 ```
 
 
 ```python
+# Import SeqRecord
 from Bio.SeqRecord import SeqRecord
 ```
 
 
 ```python
+# Create sequence of proteins
+# Assign sequence identifier
+# Add sequence desccription
 rec1 = SeqRecord(
 Seq("MMYQQGCFAGGTVLRLAKDLAENNRGARVLVVCSEITAVTFRGPSETHLDSMVGQALFDG"
     "GAGAVIVGSDPDLSVERPLYELVWTGATLLPSDEGAIDGHLREVGLTFHLLKDVPGLISK"
@@ -3186,6 +3235,9 @@ Seq("MMYQQGCFAGGTVLRLAKDLAENNRGARVLVVCSEITAVTFRGPSETHLDSMVGQALFDG"
 
 
 ```python
+# Create sequence of proteins
+# Assign sequence identifier
+# Add sequence desccription
 rec2 = SeqRecord(
 Seq("YPDYYFRITNREHKAELKEKFQRMCDKSMIKKRYMYLTEEILKENPSMCEYMAPSLDARQ"
        "DMVVEIPKLGKEAAVAIKEQGQ",
@@ -3198,6 +3250,9 @@ Seq("YPDYYFRITNREHKAELKEKFQRMCDKSMIKKRYMYLTEEILKENPSMCEYMAPSLDARQ"
 
 
 ```python
+# Create sequence of proteins
+# Assign sequence identifier
+# Add sequence desccription
 rec3 = SeqRecord(
 Seq("MVTVEEFRRAQCAEGPATVMMAIGTATPSNCVDQSTYPDYYFRITNSEHKVELKEKFLRMC"
     "EKSMIKKRYMHLTEEILKENPNICAYMAPSLDARQDIVVVEVPKLGKEAAQKAIKEWGQP"
@@ -3214,11 +3269,14 @@ Seq("MVTVEEFRRAQCAEGPATVMMAIGTATPSNCVDQSTYPDYYFRITNSEHKVELKEKFLRMC"
 
 
 ```python
+# Create list of sequences
 my_records = [rec1, rec2, rec3]
 ```
 
 
 ```python
+# Import SeqIO
+# FASTA format
 from Bio import SeqIO
 SeqIO.write(my_records, "my_example.fasta", "fasta")
 ```
@@ -3232,11 +3290,13 @@ SeqIO.write(my_records, "my_example.fasta", "fasta")
 
 
 ```python
+# Retrieve GenBank file
 records = SeqIO.parse("ls_orchid.gbk.txt", "genbank")
 ```
 
 
 ```python
+# Files converted to FASTA
 count = SeqIO.write(records, "my_example.fasta", "fasta")
 print("Coverted %i records" % count)
 ```
@@ -3246,6 +3306,9 @@ print("Coverted %i records" % count)
 
 
 ```python
+# Create loop through Genbank files
+# Print record ID
+# Print reverse complement
 for record in SeqIO.parse("ls_orchid.gbk.txt", "genbank"):
     print(record.id)
     print(record.seq.reverse_complement())
@@ -3443,6 +3506,8 @@ for record in SeqIO.parse("ls_orchid.gbk.txt", "genbank"):
 
 
 ```python
+# Create records list with reverse complement
+# Read sequences from FASTA file
 records = [
     rec.reverse_complement(id = "rc_" + rec.id, description = "reverse complement")
     for rec in SeqIO.parse("ls_orchid.fasta.txt", "fasta")
@@ -3451,6 +3516,7 @@ records = [
 
 
 ```python
+# Print records length
 len(records)
 ```
 
@@ -3463,6 +3529,9 @@ len(records)
 
 
 ```python
+# Create records list with reverse complement
+# Read sequences from FASTA file
+# Limit lis to those shorter than 700 bases
 records = [
     rec.reverse_complement(id = "rc" + rec.id, description = "reverse complement")
     for rec in SeqIO.parse("ls_orchid.fasta.txt", "fasta")
@@ -3472,6 +3541,7 @@ records = [
 
 
 ```python
+# Print records length 
 len(records)
 ```
 
@@ -3484,6 +3554,9 @@ len(records)
 
 
 ```python
+# Generate records list with reverse complement
+# Read sequences from FASTA file
+# Limit lis to those shorter than 700 bases
 records = (
 rec.reverse_complement(id = "rc_" + rec.id, description = "reverse complement")
 for rec in SeqIO.parse("ls_orchid.fasta.txt", "fasta")
