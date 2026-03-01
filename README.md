@@ -1,7 +1,6 @@
 # NatalieLeBlanc_Python2_Portfolio
 This is the portfolio of the Python 2 codes that I learned through Winter 2025-2026 in the Python 2 class (BISC 4503).
 
-
 ## Sequence Objects
 In this analysis, we used Biopython for DNA sequence creation, modification, transcription and translation, codon table visualization, etc. 
 
@@ -6375,7 +6374,7 @@ plt.imshow(flat_chess)
 
 
 ```python
-# Detect starongest 100 corners
+# Detect strongest 100 corners
 # Display image
 corners = cv2.goodFeaturesToTrack(gray_real_chess, 100, 0.01, 10)
 
@@ -6399,6 +6398,274 @@ plt.imshow(real_chess)
 
 
 ### Edge Detection
+In this analysis, we applied Canny edge detection to an image, sloth image, and applied varying parameters in vieweing the edges.
+
+```python
+# Import libary 
+import cv2
+```
+
+
+```python
+# Import numpy
+import numpy as np
+```
+
+
+```python
+# Import matplotlib
+import matplotlib.pyplot as plt
+%matplotlib inline
+```
+
+
+```python
+# Read imported image
+# Print image
+img = cv2.imread("sloth.jpeg")
+plt.imshow(img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fb021e6ff50>
+
+
+
+
+<img width="546" height="385" alt="image" src="https://github.com/user-attachments/assets/ead241b9-a1fc-4306-9224-05226cfc2856" />
+
+
+
+
+```python
+# Apply Canny edge detection
+# Fix threshold
+# Print image
+edges = cv2.Canny(image = img, threshold1= 127, threshold2 = 127)
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fb020dad6d0>
+
+
+
+
+<img width="526" height="379" alt="image" src="https://github.com/user-attachments/assets/29f2a134-a823-4301-b8ba-a1da5366aa71" />
+
+
+
+
+```python
+# Calculate median pixel intensity of image
+med_value = np.median(img)
+med_value
+```
+
+
+
+
+    114.0
+
+
+
+
+```python
+# Creates upper and lower threshold
+# Apply Canny detection with thresholds
+# Print image
+lower = int(max(0, 0.7*med_value))
+upper = int(min(255, 1.3*med_value))
+
+edges = cv2.Canny(img, threshold1 = lower, threshold2 = upper)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fb020ca9d10>
+
+
+
+<img width="567" height="403" alt="image" src="https://github.com/user-attachments/assets/e1eda57a-13a0-4d15-bde5-6829d08e452e" />
+
+
+
+
+```python
+# Increase upper threshold
+# Print image
+edges = cv2.Canny(image = img, threshold1 = lower, threshold2 = upper +100)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fb020c145d0>
+
+
+
+
+<img width="573" height="385" alt="image" src="https://github.com/user-attachments/assets/4a30a519-d5f9-4aa7-920d-d7517688971e" />
+
+
+
+
+```python
+# Apply blur to image
+# Print image
+blurred_img = cv2.blur(img, ksize = (5,5))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fb020bff590>
+
+
+
+
+<img width="583" height="388" alt="image" src="https://github.com/user-attachments/assets/e87e4fb9-8d02-4a03-8074-2216a0ad11b8" />
+
+
+
+
+```python
+# Apply stronger blur
+# Print image
+blurred_img = cv2.blur(img, ksize = (7,7))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fb020b6d350>
+
+
+
+<img width="545" height="395" alt="image" src="https://github.com/user-attachments/assets/5508166c-9216-4a6b-9436-30ff4e7fb3ed" />
+
+
+
+```python
+# Apply blur
+# Increase upper threshold
+# Print image
+blurred_img = cv2.blur(img, ksize = (5,5))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper +50)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fb020add0d0>
+
+
+
+<img width="532" height="382" alt="image" src="https://github.com/user-attachments/assets/4c4ebe38-6326-47d7-b614-d50531eba218" />
+
+
+
+
+```python
+# Apply blur
+# Increase upper threshold again
+# Print image
+blurred_img = cv2.blur(img, ksize = (5,5))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper +100)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fb020ac2dd0>
+
+
+
+
+<img width="544" height="391" alt="image" src="https://github.com/user-attachments/assets/36b0cdeb-1e56-4d37-88f4-a466797e373d" />
+
+
+
+
+```python
+# Apply stronger blur
+# Increase upper threshold
+# Print image
+blurred_img = cv2.blur(img, ksize = (7,7))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper + 60)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fb0209a2910>
+
+
+
+<img width="517" height="399" alt="image" src="https://github.com/user-attachments/assets/9b744542-e1b5-4e8c-97c5-5466cfee96a2" />
+
+
+
+
+
+
+```python
+# Apply stronger blur
+# Print image
+blurred_img = cv2.blur(img, ksize = (8,8))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fb02098f4d0>
+
+
+
+<img width="561" height="400" alt="image" src="https://github.com/user-attachments/assets/f4ed68d3-45fc-42cb-bddd-d4522941907c" />
+
 
 
 ## Feature Detection
