@@ -6,7 +6,7 @@ In this analysis, we used Biopython for DNA sequence creation, modification, tra
 
 ```python
 # Import Seq type
-from Bio.Seq import Seq
+from Bio.Seq import Seq 
 ```
 
 
